@@ -21,6 +21,9 @@ const Following = require('../models/Following.js');
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/folioDB';
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
+const bcrypt = require('bcryptjs');
+
+
 const postController = {
   postAddPost: async function (req, res){
     var query = {username: req.session.username};

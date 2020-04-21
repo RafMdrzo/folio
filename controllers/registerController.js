@@ -10,6 +10,9 @@ const Comment = require('../models/Comment.js');
 
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
+const bcrypt = require('bcryptjs');
+
+
 const registerController = {
     postRegister: async function(req, res){
         var reqName = req.body.fullName_;
