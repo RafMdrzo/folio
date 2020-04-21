@@ -7,7 +7,6 @@ function diff_hours(dt2, dt1)
 
 const db = require('../models/db.js');
 const assert = require('assert');
-const mongo = require('mongodb');
 const R = require('ramda');
 const sizeOf = require('image-size');
 
@@ -22,7 +21,7 @@ const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/folioDB';
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 const bcrypt = require('bcryptjs');
-
+const salt = bcrypt.genSaltSync(10);
 
 const postController = {
   postAddPost: async function (req, res){

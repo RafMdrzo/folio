@@ -6,8 +6,7 @@ const app = express();
 const path = require('path');
 const assert = require('assert');
 const filepond = require('filepond');
-const require = require('bcryptjs');
-
+const bcrypt = require('bcryptjs');
 
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
