@@ -152,8 +152,6 @@ const postController = {
                                 }
                               }
                             }
-                            console.log("BRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                            console.log(commUserRes);
                             //start processing likes
                             for(i = 0; i < likeRes.length; i++){
                               var likeMirror = {
