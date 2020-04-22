@@ -6,7 +6,8 @@ const User = require('../models/User.js');
 const Post = require('../models/Post.js');
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/folioDB';
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
+
 // defines an object which contains functions executed as callback
 // when a client requests for `signup` paths in the server
 const loginController = {

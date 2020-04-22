@@ -7,7 +7,6 @@ function diff_hours(dt2, dt1)
 
 const db = require('../models/db.js');
 const assert = require('assert');
-const mongo = require('mongodb');
 const R = require('ramda');
 const sizeOf = require('image-size');
 
@@ -22,7 +21,7 @@ const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/folioDB';
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 const bcrypt = require('bcryptjs');
-
+const salt = bcrypt.genSaltSync(10);
 
 const postController = {
   postAddPost: async function (req, res){
@@ -73,219 +72,178 @@ const postController = {
           res.render('login', {layout: false});
         }
         else {
-          var projection = '_id user title description dateCreated postpic imgType';
           var imgTypeRes = '';
 
+          //will contain the values that hbs can recognize
           var postResulter = [];
           var commentResulter = [];
           var userResulter = [];
           var likeResulter = [];
-          var customResulter = [];
+          var followingResulter = [];
 
+          //projections
+          var postProjection = '_id user title description dateCreated postpic imgType';
           var commentProjection = '_id post text user dateCreated';
           var userProjection = 'username avatar imgType';
           var likeProjection = 'post user'
+          var followingProjection = "following";
           var myUser = req.session.username;
 
-          var followingResulter = [];
+          //arrays that contain the values to be recognized by the $in evaluator in findMany
+          var commentIN = [];
+          var postIN = [];
+          var likeIN = [];
+          var followingIN = [];
+          var userCommIN = [];
+          //what hbs will render
+          var finalResulter = [];
 
-          db.findMany(Post, {}, projection,function(result){
-            if(result != null){
-              //process post result for views
-              var followProjection = 'following user';
-              db.findMany(Following, {user: req.session.username}, followProjection, (followRes)=>{
-                if(followRes != null)
-                {
-                  for(i = 0; i < followRes.length; i++)
-                  {
-                    var followMirror= {
-                      following: followRes[i].following,
-                      username: followRes[i].user
-                    }
-                    followingResulter.push(followMirror);
-
+          //find logged in user
+          db.findOne(User, {username: myUser}, userProjection, (userRes)=>{
+            if(userRes != null)
+            {
+            //find people you follow
+              db.findMany(Following, {user: myUser}, followingProjection, (followingRes)=>{
+                for(i = 0; i < followingRes.length; i++){
+                  followingIN.push(followingRes[i].following);
+                }
+                //find posts associated to the people the user follows
+                db.findMany(Post, {user: {$in: followingIN}}, postProjection, (postRes)=>{
+                  //generate array for filtering posts in comment
+                  for(i = 0; i < postRes.length; i++){
+                    commentIN.push('a' + postRes[i]._id);
                   }
 
-                  if(followingResulter.length == 0)
-                  {
-                    for(i = 0; i < result.length; i++)
-                    {
-                      if(result[i].user == req.session.username)
-                      {
-                        elapsed = diff_hours(new Date(Date.now()), new Date(result[i].dateCreated));
-                        var postMirror = {
-                          post_image: `data:${result[i].imgType};charset=utf-8;base64,${result[i].postpic.toString('base64')}`,
-                          post_title: result[i].title,
-                          post_description: result[i].description,
-                          post_author: result[i].user,
-                          post_elapsed: elapsed > 24 ? (Math.floor(elapsed/24) > 1 ? (Math.floor(elapsed/24) + ' days ago') : '1 day ago') :  ( Math.floor(elapsed) == 1? (Math.floor(elapsed) + ' hour ago') : (Math.floor(elapsed) > 1 ? (Math.floor(elapsed) + ' hours ago') : (Math.floor(elapsed*60) <= 1 ? '1 minute ago' : (Math.floor(elapsed*60) + ' minutes ago')))),
-                          post_id: 'a' + result[i]._id,
-                          status: result[i].user == myUser ? true : false,
-                          comment: [],
-                          edit_id: 'aa' + result[i]._id,
-                          liked: false,
-                          orientation: 'photo'
-                        };
-                        var base64 = result[i].postpic.toString('base64');
-                        var img = Buffer.from(base64, 'base64')
-                        var dimensions = sizeOf(img);
+                  //look for posts the user liked
+                  db.findMany(Like, {user: myUser}, likeProjection, (likeRes)=>{
 
-                        postMirror.orientation = dimensions.width > dimensions.height ? 'photo' : 'photovert';
-                        postResulter.push(postMirror);
-                      }
-                    }
-                  }
-
-                  for(j = 0 ; j < followingResulter.length; j++)
-                  {
-                    for(i = 0; i < result.length; i++)
-                    {
-                      if(followingResulter[j].following == result[i].user || result[i].user == req.session.username)
-                      {
-                        elapsed = diff_hours(new Date(Date.now()), new Date(result[i].dateCreated));
-                        var postMirror = {
-                          post_image: `data:${result[i].imgType};charset=utf-8;base64,${result[i].postpic.toString('base64')}`,
-                          post_title: result[i].title,
-                          post_description: result[i].description,
-                          post_author: result[i].user,
-                          post_elapsed: elapsed > 24 ? (Math.floor(elapsed/24) > 1 ? (Math.floor(elapsed/24) + ' days ago') : '1 day ago') :  ( Math.floor(elapsed) == 1? (Math.floor(elapsed) + ' hour ago') : (Math.floor(elapsed) > 1 ? (Math.floor(elapsed) + ' hours ago') : (Math.floor(elapsed*60) <= 1 ? '1 minute ago' : (Math.floor(elapsed*60) + ' minutes ago')))),
-                          post_id: 'a' + result[i]._id,
-                          status: result[i].user == myUser ? true : false,
-                          comment: [],
-                          edit_id: 'aa' + result[i]._id,
-                          liked: false,
-                          orientation: 'photo'
-                        };
-                        var base64 = result[i].postpic.toString('base64');
-                        var img = Buffer.from(base64, 'base64')
-                        var dimensions = sizeOf(img);
-
-                        postMirror.orientation = dimensions.width > dimensions.height ? 'photo' : 'photovert';
-                        postResulter.push(postMirror);
-                      }
-                    }
-
-                  }
-
-                  //process likes
-                  db.findMany(Like, {}, likeProjection, (likeRes)=>{
-                    if(likeRes != null){
-                      for(i = 0; i < likeRes.length; i++)
-                      {
-                        var likeMirror = {
-                          post_id: 'a' + likeRes[i].post,
-                          user: likeRes[i].user
+                    //look for comments associated to the post
+                    db.findMany(Comment, {post: {$in: commentIN}}, commentProjection, (commentRes)=>{
+                      if(commentRes != null){
+                        //generate a filter to assign avatar and user in comments
+                        for(i = 0; i < commentRes.length; i++){
+                          userCommIN.push(commentRes[i].user);
                         }
-                        likeResulter.push(likeMirror);
-                      }
-                    }
+                       
+                        //look for the avatar and username assigned to each commenting user
+                        db.findMany(User, {username: {$in: userCommIN}}, userProjection, (commUserRes)=>{
+                          if(commUserRes != null){
+                            //store comments
+                            for(i = 0; i < commentRes.length; i++){
+                              var commentMirror = {
+                                virtualPath: null,
+                                text: commentRes[i].text,
+                                name: commentRes[i].user,
+                                dateCreated: commentRes[i].dateCreated,
+                                post_id: commentRes[i].post,
+                                checked: false,
+                                userChecked: false
+                              }
+                              commentResulter.push(commentMirror);
+                            }//end comment push
 
-                    for(i = 0; i < postResulter.length; i++)
-                    {
-                      for(j = 0; j < likeResulter.length; j++)
-                      {
-                        if(postResulter[i].post_id == likeResulter[j].post_id)
-                        {
-                          if(likeResulter[j].user == myUser)
-                          {
-                            postResulter[j].liked = true;
-                          }
-                        }
-                      }
-                    }
-                  });
-
-                  //process comment
-                  db.findMany(Comment, {}, commentProjection, (commRes)=>{
-                    if(commRes != null){
-                      for(i = 0; i < commRes.length; i++)
-                      {
-                        var commentMirror = {
-                          username: commRes[i].user,
-                          post_id: commRes[i].post,
-                          dateCreated: commRes[i].dateCreated,
-                          text: commRes[i].text
-                        }
-
-                        commentResulter[i] = commentMirror;
-                      }
-
-                      //process user result
-                      db.findMany(User, {}, userProjection, (profRes)=>{
-                        if(profRes != null){
-                          for(i = 0; i < profRes.length; i++)
-                          {
-                            var userMirror = {
-                              username: profRes[i].username,
-                              virtualPath:  `data:${profRes[i].imgType};charset=utf-8;base64,${profRes[i].avatar.toString('base64')}`
-                            }
-
-                            userResulter.push(userMirror);
-
-                          }
-
-                          for(i = 0; i < postResulter.length; i++)
-                          {
-                            var finalResulter = [];
-                            for(j = 0; j < commentResulter.length; j++)
-                            {
-                              if(commentResulter[j].post_id == postResulter[i].post_id)
+                            for(i = 0; i < commUserRes.length; i++){
+                              for(j = 0; j < commentResulter.length; j++)
                               {
-                                for(n = 0; n < userResulter.length; n++)
+                                if(commUserRes[i].username == commentResulter[j].name)
                                 {
-                                  if(userResulter[n].username == commentResulter[j].username)
-                                  {
-                                    var finalMirror = {
-                                      virtualPath: userResulter[n].virtualPath,
-                                      text: commentResulter[j].text,
-                                      name: userResulter[n].username,
-                                    }
-                                    postResulter[i].comment.push(finalMirror);
-                                  }
+                                  commentResulter[j].virtualPath = `data:${commUserRes[i].imgType};charset=utf-8;base64,${commUserRes[i].avatar.toString('base64')}`;
+                                 
                                 }
                               }
                             }
-                          }
+                            //start processing likes
+                            for(i = 0; i < likeRes.length; i++){
+                              var likeMirror = {
+                                post_id: 'a' + likeRes[i].post,
+                                user: likeRes[i].user,
+                                checked: false
+                              }
+                              likeResulter.push(likeMirror);
+                            }//end like process
+                            
+                            //start processing posts by pushing it to finalResulter
+                            for(i = 0; i < postRes.length; i++){
+                              var elapsed = diff_hours(new Date(Date.now()), new Date(postRes[i].dateCreated));
 
-                          //logged-in User
-                          var newQuery = {username: req.session.username};
-                          var newProjection = 'avatar imgType';
-                          db.findOne(User, newQuery, newProjection, async (newRes)=>{
-                            if(newRes != null){
+                              var postMirror = {
+                                post_image: `data:${postRes[i].imgType};charset=utf-8;base64,${postRes[i].postpic.toString('base64')}`,
+                                post_title: postRes[i].title,
+                                post_description: postRes[i].description,
+                                post_author: postRes[i].user,
+                                post_elapsed: elapsed > 24 ? (Math.floor(elapsed/24) > 1 ? (Math.floor(elapsed/24) + ' days ago') : '1 day ago') :  ( Math.floor(elapsed) == 1? (Math.floor(elapsed) + ' hour ago') : (Math.floor(elapsed) > 1 ? (Math.floor(elapsed) + ' hours ago') : (Math.floor(elapsed*60) <= 1 ? '1 minute ago' : (Math.floor(elapsed*60) + ' minutes ago')))),
+                                post_id: 'a' + postRes[i]._id,
+                                status: postRes[i].user == myUser ? true : false,
+                                comment: [],
+                                edit_id: 'aa' + postRes[i]._id,
+                                liked: false,
+                                orientation: 'photo',
+      
+                              }
 
-                              res.render('home',{
-                                myavatar:  `data:${newRes.imgType};charset=utf-8;base64,${newRes.avatar.toString('base64')}`,
-                                post: postResulter
-                              })
+                              var base64 = postRes[i].postpic.toString('base64');
+                              var img = Buffer.from(base64, 'base64')
+                              var dimensions = sizeOf(img);
+
+                              postMirror.orientation = dimensions.width > dimensions.height ? 'photo' : 'photovert';
+
+                              finalResulter.push(postMirror);
+
+                            
+                            }//end processing posts to final resulter
+
+                            //process comments to final resulter
+                            for(i = 0; i < finalResulter.length; i++){
+                              for(j = 0; j < commentResulter.length; j++){
+
+                                if(commentResulter[j].checked == false  && commentResulter[j].post_id == finalResulter[i].post_id){
+                                  finalResulter[i].comment.push(commentResulter[j]);
+                                  commentResulter[j].checked = true;
+                                }
+                              }
                             }
-                          });
-                        } else {
-                          res.send(500 + 'Error in handling data');
-                        }
-                      });
-                      //process and combine gathered queries from user and comment to show comments in views
-                    } else {
-                      res.send(500 + 'Error in handling data');
-                    }
-                  });
-                } else {
-                  db.findOne(User, newQuery, newProjection, async (newRes)=>{
-                    if(newRes != null){
+                            //process likes to final resulter
+                            for(i = 0; i < finalResulter.length; i++){
+                              for(j = 0; j < likeResulter.length; j++){
+                                var ogID = likeResulter[j].post_id.substr(1);
 
-                      res.render('home',{
-                        myavatar:  `data:${newRes.imgType};charset=utf-8;base64,${newRes.avatar.toString('base64')}`                      })
+                                if(likeResulter[j].checked == false && finalResulter[i].post == ogID){
+                                  finalResulter[i].liked = true;
+                                  likeResulter[j].checked = true;
+                                }
+                              }
+                            }//end processing likes to final resulter
+
+                            res.render('home',{
+                              myavatar:  `data:${userRes.imgType};charset=utf-8;base64,${userRes.avatar.toString('base64')}`,
+                              post: finalResulter
+                            })
+
+                          }
+                        });//end avatar searcg
+                        
+
+
+                        //process found posts
+
                       }
-                    });
-                  }
+                    });//end comment finder
 
-                });
 
-              } else {
-                res.send(500);
-              }
-            });
-          }
-        },
+                  });//end like finder
+
+                });//end post finder
+
+              });//end find people you follow              
+            }
+
+          
+          
+          });//end User findOne
+        
+        }
+        
+      },
 
         postEditPost: (req, res)=>{
           var modifiedPostID = req.body.hidden_editID;

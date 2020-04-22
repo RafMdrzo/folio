@@ -8,7 +8,6 @@ const assert = require('assert');
 const filepond = require('filepond');
 const bcrypt = require('bcryptjs');
 
-
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 app.use(express.json({limit: '50mb'}));
