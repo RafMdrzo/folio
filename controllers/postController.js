@@ -21,7 +21,6 @@ const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/folioDB';
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 const bcrypt = require('bcryptjs');
-const salt = bcrypt.genSaltSync(10);
 
 const postController = {
   postAddPost: async function (req, res){
@@ -107,6 +106,9 @@ const postController = {
                 for(i = 0; i < followingRes.length; i++){
                   followingIN.push(followingRes[i].following);
                 }
+
+                followingIN.push(userRes.username);
+                
                 //find posts associated to the people the user follows
                 db.findMany(Post, {user: {$in: followingIN}}, postProjection, (postRes)=>{
                   //generate array for filtering posts in comment
