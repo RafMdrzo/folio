@@ -6,7 +6,7 @@ const User = require('../models/User.js');
 const Post = require('../models/Post.js');
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/folioDB';
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-
+const bcrypt = require("bcryptjs");
 // defines an object which contains functions executed as callback
 // when a client requests for `signup` paths in the server
 const loginController = {
@@ -39,13 +39,18 @@ const loginController = {
     db.findOne(User, query, projection, function(result) {
       if(result != null) {
         if(req.body.username == result.username) {
-          if(req.body.password == result.password) {
-            req.session.username = result.username;
-            req.session.loggedin = true;
-            res.redirect("/home");
-          } else {
-            res.redirect("/");
-          }
+
+          bcrypt.compare(req.body.password, result.password, function(err, searchRes) {
+              // res === false
+              if(searchRes === true){
+                req.session.username = result.username;
+                req.session.loggedin = true;
+                res.redirect("/home");
+              } else {
+                res.redirect("/");
+              }
+          });
+          
         }
       }
       else {

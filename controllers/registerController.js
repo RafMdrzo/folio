@@ -20,20 +20,26 @@ const registerController = {
         var reqEmail = req.body.email_;
         var reqPw = req.body.pw_;
 
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(reqPw, salt, function(err, hash) {
+                // Store hash in your password DB.
+                db.insertOne(User,
+                    {
+                        fullName: reqName,
+                        username : reqUsername,
+                        email : reqEmail,
+                        password : hash,
+                        emailConf: false,
+                        bio : "",
+                        location : "",
+                        avatar: null,
+                        imgType: ""
+                    } );
+            });
+        });
        
 
-        db.insertOne(User,
-            {
-                fullName: reqName,
-                username : reqUsername,
-                email : reqEmail,
-                password : reqPw,
-                emailConf: false,
-                bio : "",
-                location : "",
-                avatar: null,
-                imgType: ""
-            } );
+        
 
             res.redirect('/registerBioLoc?username=' + reqUsername);
     },
