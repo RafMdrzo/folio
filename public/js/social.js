@@ -59,7 +59,7 @@ $(document).ready(function() {
   });
 
   //add comment
-  $('.addcommentbtn').click(function() {
+  $('.comment-container').on('click', '.addcommentbtn', function() {
     var post_id = $(this).closest("form").attr('id');
     var comment = $('.addcomment').val();
     var img = $('.nav-avatar').attr("src");
@@ -70,7 +70,9 @@ $(document).ready(function() {
           '<img src="' + img + '">' +
           '<div class="row-name">' +
           '<strong>' + result.username + '</strong>' +
-          '<div class="row-comment text-break">' + comment + '</div></div></div>'
+          '<div class="row-comment text-break">' + comment + '</div></div>' +
+          '<button class="removecom"> X </button>' +
+          '</div>'
         );
       }
       else {
