@@ -12,9 +12,6 @@ const followController = {
     var userQuery = req.session.username;
     var follow = req.body.follow;
 
-    console.log(userQuery);
-    console.log(follow);
-
     db.insertOne(Follower, {user: follow, follower: userQuery}, function(flag1) {
       db.insertOne(Following, {user: userQuery, following: follow}, function(flag2) {
         if(flag1 == true) {
