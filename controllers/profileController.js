@@ -222,8 +222,6 @@ const profileController = {
           var confnewpass = req.body.confpass;
           var currentUser = req.session.username;
           var filter = {username: currentUser};
-          console.log(newpass);
-          console.log(confnewpass);
 
           if((newpass != "") && (confnewpass != "") && (newpass == confnewpass))
           {

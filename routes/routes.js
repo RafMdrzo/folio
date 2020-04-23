@@ -21,6 +21,7 @@ const searchController = require('../controllers/searchController.js');
 const commentController = require('../controllers/commentController.js');
 const likeController = require('../controllers/likeController.js');
 const followController = require('../controllers/followController.js');
+const forgotController = require('../controllers/forgotController.js');
 
 app.use(session({
   cookieName:'session',
@@ -46,6 +47,11 @@ app.post('/registerBioLoc', registerController.postBioLoc);
 app.post('/registerAvatar', registerController.postAvatar);
 
 app.get('/confirmuser', registerController.getConfirmUser);
+
+//forgot password
+app.get('/forgotpass', forgotController.sendEmail);
+app.get('/resetpass', forgotController.resetPassword);
+app.post('/confresetpass', forgotController.confResetPassword);
 
 //posting
 app.post('/postprocessing', postController.postAddPost);
@@ -76,9 +82,9 @@ app.post('/editemail', profileController.postEditEmail);
 app.post('/changepassword', profileController.postChangePassword);
 
 app.get('/search', searchController.getSearch);
+
 //delete user
 app.post('/deleteuser', registerController.deleteUser);
-
 
 //register ajax
 app.get('/checkUsername', registerController.getCheckUsername);

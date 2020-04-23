@@ -63,7 +63,6 @@
             <button id="regBtn" type="button" class="btn-lg"
             data-toggle="modal" data-target="#registerFormModal" align="center">register</button>
           </div>
-
         </form>
 
         <hr>
@@ -159,7 +158,10 @@
           <form>
             <div class="form-group">
               <label for="mailing" >Email</label>
-              <input type="email" class="form-control" id="mailForgotten" placeholder="Enter email">
+              <input type="email" class="form-control" name = "mailForgotten" id="mailForgotten" placeholder="Enter email">
+            </div>
+            <div id="error-cont">
+                <p class="error-msg-email"></p>
             </div>
           </form>
         </div>

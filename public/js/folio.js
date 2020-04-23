@@ -52,6 +52,7 @@ $( document ).ready(function()
             var stmt = "Passwords don't match.";
             $("#error-msg-cpw").val(stmt);
             $('#regMod').prop('disabled', true);
+            $('#submitBtn').prop('disabled', true);
 
         }
         else
@@ -60,6 +61,7 @@ $( document ).ready(function()
             $("#cp_w").css("border-color", "green");
             check = true;
             $('#regMod').prop('disabled', false);
+            $('#submitBtn').prop('disabled', false);
 
         }
    });
@@ -136,7 +138,6 @@ $( document ).ready(function()
     $('#email_').keyup(function (){
         var mailer = $('#email_').val();
 
-
         $.get('/checkEmail', {email: mailer}, function(result){
             if(result.email == mailer){
                 $('#email_').css('border-color', 'red');
@@ -150,5 +151,45 @@ $( document ).ready(function()
             }
         });
     });
-    
+
+    /*FORGOT PASSWORD*/
+    $('#mailForgotten').keyup(function() {
+        var mailer = $('#mailForgotten').val();
+
+        $.get('/checkEmail', {email: mailer}, function(result){
+            if(result.email != mailer){
+                $('#mailForgotten').css('border-color', 'red');
+                $('.error-msg-email').text('Not a valid email');
+                $('#forgotMod').prop('disabled', true);
+
+            } else {
+                $('#mailForgotten').css('border-color', 'green');
+                $('.error-msg-email').text('');
+                $('#forgotMod').prop('disabled', false);
+            }
+        });
+    });
+
+    $('#forgotMod').click(function() {
+        var mailer = $('#mailForgotten').val();
+        alert(mailer);
+
+        if(mailer != null)
+        {
+            $.post('/forgotpass', {email: mailer}, function(result){
+                if(result != null){
+                    alert("Email sent.");
+                }
+            });
+        }
+    });
+
+    $('#submitBtn').click(function() {
+        $.post('/confresetpass', {password: pass}, function(result){
+            if(result)
+            {
+
+            }
+        })
+    })
 });
