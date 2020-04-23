@@ -11,7 +11,7 @@ const Comment = require('../models/Comment.js');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 const bcrypt = require('bcryptjs');
-
+const nodemailer = require('nodemailer');
 
 const registerController = {
     postRegister: async function(req, res){
@@ -21,7 +21,7 @@ const registerController = {
         var reqPw = req.body.pw_;
 
         bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(reqPw, salt, function(err, hash) {
+            bcrypt.hash(reqPw, salt, async function(err, hash) {
                 // Store hash in your password DB.
                 db.insertOne(User,
                     {
@@ -35,10 +35,26 @@ const registerController = {
                         avatar: null,
                         imgType: ""
                     } );
+
+                    const transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                            user: 'foliodbteam@gmail.com',
+                            pass: 'accessingFOLIODB1'
+                        }
+                    });
+                    // send mail with defined transport object
+                    var info = await transporter.sendMail({
+                        from: '"Folio Team" <foliodbteam@gmail.com>', // sender address
+                        to: reqEmail, // list of receivers
+                        subject: "Welcome to Folio!", // Subject line
+                        html: "Welcome to Folio!\nThis email serves as a confirmation for your email. If you're using localhost: <a href='http://localhost:3000/confirmuser?email="+reqEmail+
+                                "'> here </a><br>or if you're using Heroku: <a href='http://foliodb.herokuapp.com/confirmuser?email="+reqEmail + "'> here </a>." // plain text body
+                    });
+
             });
         });
        
-
         
 
             res.redirect('/registerBioLoc?username=' + reqUsername);
@@ -119,6 +135,11 @@ const registerController = {
         db.findOne(User, {email: mailer}, 'email', (result)=>{
             res.send(result);
         })
+    },
+    getConfirmUser: async (req, res)=>{
+        var reqEmail = req.query.email;
+        db.updateOne(User, {email: reqEmail}, {emailConf: true});
+        res.render('confirmed', {layout: false});
     }
 };
 

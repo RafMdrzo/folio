@@ -45,6 +45,8 @@ app.get('/registerAvatar', registerController.getAvatar)
 app.post('/registerBioLoc', registerController.postBioLoc);
 app.post('/registerAvatar', registerController.postAvatar);
 
+app.get('/confirmuser', registerController.getConfirmUser);
+
 //posting
 app.post('/postprocessing', postController.postAddPost);
 app.get('/home', postController.getHome);
@@ -96,5 +98,6 @@ app.get('/logout', function(req, res) {
 app.get("/profile", profileController.getSelfProfile);
 app.get("/:username", profileController.getUserProfile);
 
+//confirm email link
 
 module.exports = app;
