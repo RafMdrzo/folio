@@ -57,6 +57,7 @@ app.post('/deletepost', postController.postDeletePost);
 
 //commenting
 app.post('/addcomment', commentController.postAddComment);
+app.post('/deletecomment', commentController.postDeleteComment);
 
 //liking
 app.post('/likepost', likeController.postLike);
