@@ -107,7 +107,7 @@ const postController = {
                 }
 
                 followingIN.push(userRes.username);
-                
+
                 //find posts associated to the people the user follows
                 db.findMany(Post, {user: {$in: followingIN}}, postProjection, (postRes)=>{
                   //generate array for filtering posts in comment
@@ -125,7 +125,7 @@ const postController = {
                         for(i = 0; i < commentRes.length; i++){
                           userCommIN.push(commentRes[i].user);
                         }
-                       
+
                         //look for the avatar and username assigned to each commenting user
                         db.findMany(User, {username: {$in: userCommIN}}, userProjection, (commUserRes)=>{
                           if(commUserRes != null){
@@ -149,7 +149,7 @@ const postController = {
                                 if(commUserRes[i].username == commentResulter[j].name)
                                 {
                                   commentResulter[j].virtualPath = `data:${commUserRes[i].imgType};charset=utf-8;base64,${commUserRes[i].avatar.toString('base64')}`;
-                                 
+
                                 }
                               }
                             }
@@ -162,7 +162,7 @@ const postController = {
                               }
                               likeResulter.push(likeMirror);
                             }//end like process
-                            
+
                             //start processing posts by pushing it to finalResulter
                             for(i = 0; i < postRes.length; i++){
                               var elapsed = diff_hours(new Date(Date.now()), new Date(postRes[i].dateCreated));
@@ -179,7 +179,7 @@ const postController = {
                                 edit_id: 'aa' + postRes[i]._id,
                                 liked: false,
                                 orientation: 'photo',
-      
+
                               }
 
                               var base64 = postRes[i].postpic.toString('base64');
@@ -190,7 +190,7 @@ const postController = {
 
                               finalResulter.push(postMirror);
 
-                            
+
                             }//end processing posts to final resulter
 
                             //process comments to final resulter
@@ -206,9 +206,12 @@ const postController = {
                             //process likes to final resulter
                             for(i = 0; i < finalResulter.length; i++){
                               for(j = 0; j < likeResulter.length; j++){
-                                var ogID = likeResulter[j].post_id.substr(1);
+                                var ogID = 'a' + likeResulter[j].post_id.substr(1);
 
-                                if(likeResulter[j].checked == false && finalResulter[i].post == ogID){
+                                console.log(ogID);
+                                console.log(finalResulter[i].post_id);
+
+                                if(likeResulter[j].checked == false && finalResulter[i].post_id == ogID){
                                   finalResulter[i].liked = true;
                                   likeResulter[j].checked = true;
                                 }
@@ -222,7 +225,7 @@ const postController = {
 
                           }
                         });//end avatar searcg
-                        
+
 
 
                         //process found posts
@@ -235,15 +238,15 @@ const postController = {
 
                 });//end post finder
 
-              });//end find people you follow              
+              });//end find people you follow
             }
 
-          
-          
+
+
           });//end User findOne
-        
+
         }
-        
+
       },
 
         postEditPost: (req, res)=>{
