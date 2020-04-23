@@ -83,14 +83,14 @@
             {{/each}}
           </div>
           <div class="comment-form">
-            <form method='POST' action='/addcomment' class="col-lg">
+            <form class="col-lg" id="{{this.post_id}}">
               <div class="form-row">
                 <div class="comment-input">
                   <input name='comment' class="addcomment form-control mr-sm-2" type="text" placeholder="comment" aria-label="Search">
                   <input type='hidden' name='hidden_id' value='{{this.post_id}}'>
                 </div>
                 <div class="comment-button">
-                  <button type="submit" class="addcommentbtn btn btn-secondary">Comment</button>
+                  <button class="addcommentbtn btn btn-secondary">Comment</button>
                 </div>
               </div>
             </form>
