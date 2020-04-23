@@ -79,6 +79,7 @@
                   {{this.text}}
                 </div>
               </div>
+              <button class="removecom"> X </button>
             </div>
             {{/each}}
           </div>
@@ -132,7 +133,7 @@
           </form>
           <form method='POST' action='/deletepost'>
             <input name='hidden_deleteID' type='hidden' value='{{this.post_id}}'>
-            <button type="submit" class="delpostbtn">Delete Post</button>
+            <button type="submit" class="delpostbtn" id='{{this.comment_id}}'>Delete Post</button>
           </div>
         </form>
 

@@ -44,6 +44,8 @@ const postController = {
             title: post_title,
             description: desc,
             user: req.session.username
+          }, (result)=>{
+            console.log("Added 1 Post");
           });
           res.redirect('/home');
         } else {
@@ -54,6 +56,9 @@ const postController = {
               postpic: null,
               description: desc,
               imgType: ""
+
+            }, (result)=>{
+              console.log("Added 1 Post");
 
             } );
             res.redirect(req.get('referer'));
@@ -100,7 +105,7 @@ const postController = {
           db.findOne(User, {username: myUser}, userProjection, (userRes)=>{
             if(userRes != null)
             {
-            //find people you follow
+              //find people you follow
               db.findMany(Following, {user: myUser}, followingProjection, (followingRes)=>{
                 for(i = 0; i < followingRes.length; i++){
                   followingIN.push(followingRes[i].following);
@@ -126,6 +131,8 @@ const postController = {
                           userCommIN.push(commentRes[i].user);
                         }
 
+                        userCommIN.push(userRes.username);
+
                         //look for the avatar and username assigned to each commenting user
                         db.findMany(User, {username: {$in: userCommIN}}, userProjection, (commUserRes)=>{
                           if(commUserRes != null){
@@ -138,7 +145,7 @@ const postController = {
                                 dateCreated: commentRes[i].dateCreated,
                                 post_id: commentRes[i].post,
                                 checked: false,
-                                userChecked: false
+                                userChecked: commentRes[i].user == req.session.username ? true : false
                               }
                               commentResulter.push(commentMirror);
                             }//end comment push
@@ -208,9 +215,6 @@ const postController = {
                               for(j = 0; j < likeResulter.length; j++){
                                 var ogID = 'a' + likeResulter[j].post_id.substr(1);
 
-                                console.log(ogID);
-                                console.log(finalResulter[i].post_id);
-
                                 if(likeResulter[j].checked == false && finalResulter[i].post_id == ogID){
                                   finalResulter[i].liked = true;
                                   likeResulter[j].checked = true;
@@ -249,34 +253,34 @@ const postController = {
 
       },
 
-        postEditPost: (req, res)=>{
-          var modifiedPostID = req.body.hidden_editID;
+      postEditPost: (req, res)=>{
+        var modifiedPostID = req.body.hidden_editID;
+        var originalID = modifiedPostID.substr(1);
+        var reqTitle = req.body.edit_title;
+        var reqDesc = req.body.edit_desc;
+
+        var filter = {_id: originalID};
+        db.updateOne(Post, filter,
+          {
+            title: reqTitle,
+            description: reqDesc
+          });
+
+          res.redirect(req.get('referer'));
+
+        },
+
+        postDeletePost: (req, res) =>{
+          var modifiedPostID = req.body.hidden_deleteID;
           var originalID = modifiedPostID.substr(1);
-          var reqTitle = req.body.edit_title;
-          var reqDesc = req.body.edit_desc;
 
-          var filter = {_id: originalID};
-          db.updateOne(Post, filter,
-            {
-              title: reqTitle,
-              description: reqDesc
-            });
+          var conditions = {_id: originalID}
 
-            res.redirect(req.get('referer'));
+          db.deleteOne(Post, conditions);
+          db.deleteMany(Comment, {post: modifiedPostID});
+          res.redirect('/home');
 
-          },
+        }
+      };
 
-          postDeletePost: (req, res) =>{
-            var modifiedPostID = req.body.hidden_deleteID;
-            var originalID = modifiedPostID.substr(1);
-
-            var conditions = {_id: originalID}
-
-            db.deleteOne(Post, conditions);
-            db.deleteMany(Comment, {post: modifiedPostID});
-            res.redirect('/home');
-
-          }
-        };
-
-        module.exports = postController;
+      module.exports = postController;
