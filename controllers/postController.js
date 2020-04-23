@@ -44,6 +44,8 @@ const postController = {
             title: post_title,
             description: desc,
             user: req.session.username
+          }, (result)=>{
+            console.log("Added 1 Post");
           });
           res.redirect('/home');
         } else {
@@ -54,6 +56,9 @@ const postController = {
               postpic: null,
               description: desc,
               imgType: ""
+
+            }, (result)=>{
+              console.log("Added 1 Post");
 
             } );
             res.redirect(req.get('referer'));
@@ -100,14 +105,14 @@ const postController = {
           db.findOne(User, {username: myUser}, userProjection, (userRes)=>{
             if(userRes != null)
             {
-            //find people you follow
+              //find people you follow
               db.findMany(Following, {user: myUser}, followingProjection, (followingRes)=>{
                 for(i = 0; i < followingRes.length; i++){
                   followingIN.push(followingRes[i].following);
                 }
 
                 followingIN.push(userRes.username);
-                
+
                 //find posts associated to the people the user follows
                 db.findMany(Post, {user: {$in: followingIN}}, postProjection, (postRes)=>{
                   //generate array for filtering posts in comment
@@ -125,7 +130,9 @@ const postController = {
                         for(i = 0; i < commentRes.length; i++){
                           userCommIN.push(commentRes[i].user);
                         }
-                       
+
+                        userCommIN.push(userRes.username);
+
                         //look for the avatar and username assigned to each commenting user
                         db.findMany(User, {username: {$in: userCommIN}}, userProjection, (commUserRes)=>{
                           if(commUserRes != null){
@@ -138,7 +145,7 @@ const postController = {
                                 dateCreated: commentRes[i].dateCreated,
                                 post_id: commentRes[i].post,
                                 checked: false,
-                                userChecked: false
+                                userChecked: commentRes[i].user == req.session.username ? true : false
                               }
                               commentResulter.push(commentMirror);
                             }//end comment push
@@ -149,7 +156,7 @@ const postController = {
                                 if(commUserRes[i].username == commentResulter[j].name)
                                 {
                                   commentResulter[j].virtualPath = `data:${commUserRes[i].imgType};charset=utf-8;base64,${commUserRes[i].avatar.toString('base64')}`;
-                                 
+
                                 }
                               }
                             }
@@ -162,7 +169,7 @@ const postController = {
                               }
                               likeResulter.push(likeMirror);
                             }//end like process
-                            
+
                             //start processing posts by pushing it to finalResulter
                             for(i = 0; i < postRes.length; i++){
                               var elapsed = diff_hours(new Date(Date.now()), new Date(postRes[i].dateCreated));
@@ -179,7 +186,7 @@ const postController = {
                                 edit_id: 'aa' + postRes[i]._id,
                                 liked: false,
                                 orientation: 'photo',
-      
+
                               }
 
                               var base64 = postRes[i].postpic.toString('base64');
@@ -190,7 +197,7 @@ const postController = {
 
                               finalResulter.push(postMirror);
 
-                            
+
                             }//end processing posts to final resulter
 
                             //process comments to final resulter
@@ -206,9 +213,9 @@ const postController = {
                             //process likes to final resulter
                             for(i = 0; i < finalResulter.length; i++){
                               for(j = 0; j < likeResulter.length; j++){
-                                var ogID = likeResulter[j].post_id.substr(1);
+                                var ogID = 'a' + likeResulter[j].post_id.substr(1);
 
-                                if(likeResulter[j].checked == false && finalResulter[i].post == ogID){
+                                if(likeResulter[j].checked == false && finalResulter[i].post_id == ogID){
                                   finalResulter[i].liked = true;
                                   likeResulter[j].checked = true;
                                 }
@@ -222,7 +229,7 @@ const postController = {
 
                           }
                         });//end avatar searcg
-                        
+
 
 
                         //process found posts
@@ -235,45 +242,45 @@ const postController = {
 
                 });//end post finder
 
-              });//end find people you follow              
+              });//end find people you follow
             }
 
-          
-          
+
+
           });//end User findOne
-        
+
         }
-        
+
       },
 
-        postEditPost: (req, res)=>{
-          var modifiedPostID = req.body.hidden_editID;
+      postEditPost: (req, res)=>{
+        var modifiedPostID = req.body.hidden_editID;
+        var originalID = modifiedPostID.substr(1);
+        var reqTitle = req.body.edit_title;
+        var reqDesc = req.body.edit_desc;
+
+        var filter = {_id: originalID};
+        db.updateOne(Post, filter,
+          {
+            title: reqTitle,
+            description: reqDesc
+          });
+
+          res.redirect(req.get('referer'));
+
+        },
+
+        postDeletePost: (req, res) =>{
+          var modifiedPostID = req.body.hidden_deleteID;
           var originalID = modifiedPostID.substr(1);
-          var reqTitle = req.body.edit_title;
-          var reqDesc = req.body.edit_desc;
 
-          var filter = {_id: originalID};
-          db.updateOne(Post, filter,
-            {
-              title: reqTitle,
-              description: reqDesc
-            });
+          var conditions = {_id: originalID}
 
-            res.redirect(req.get('referer'));
+          db.deleteOne(Post, conditions);
+          db.deleteMany(Comment, {post: modifiedPostID});
+          res.redirect('/home');
 
-          },
+        }
+      };
 
-          postDeletePost: (req, res) =>{
-            var modifiedPostID = req.body.hidden_deleteID;
-            var originalID = modifiedPostID.substr(1);
-
-            var conditions = {_id: originalID}
-
-            db.deleteOne(Post, conditions);
-            db.deleteMany(Comment, {post: modifiedPostID});
-            res.redirect('/home');
-
-          }
-        };
-
-        module.exports = postController;
+      module.exports = postController;

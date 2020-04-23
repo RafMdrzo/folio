@@ -57,4 +57,42 @@ $(document).ready(function() {
       }
     });
   });
+
+  //add comment
+  $('.addcommentbtn').click(function() {
+    var post_id = $(this).closest("form").attr('id');
+    var comment = $('.addcomment').val();
+    var img = $('.nav-avatar').attr("src");
+    $.post('/addcomment', {hidden_id: post_id, comment: comment}, function(result) {
+      if(result.flag) {
+        $('.comments').append(
+          '<div class="comment-cont">' +
+          '<img src="' + img + '">' +
+          '<div class="row-name">' +
+          '<strong>' + result.username + '</strong>' +
+          '<div class="row-comment text-break">' + comment + '</div></div></div>'
+        );
+      }
+      else {
+        return;
+      }
+    });
+  });
+
+  //delete comment
+  $('.comments').on('click', '.removecom', function() {
+    var post_id = $(this).parents('div').last().attr('id');
+    var data = ($(this).parent().text()).trim();
+    data = data.replace(/(\r\n|\n|\r)/gm, "");
+    var username = data.substr(0, data.indexOf(' '));
+    username = username.replace(/(\r\n|\n|\r)/gm, "");
+    var comment = (data.substr(username.length)).trim();
+    comment = comment.substr(0, comment.indexOf(' '));
+    comment = comment.replace(/(\r\n|\n|\r)/gm, "");
+    $(this).parent().remove();
+    console.log(comment);
+    console.log(username);
+    console.log(post_id);
+    $.post('/deletecomment', {username: username, hidden_id: post_id, comment: comment}, function(result){});
+  });
 });

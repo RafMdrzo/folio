@@ -38,6 +38,10 @@ var UserSchema = new mongoose.Schema({
     imgType: {
         type: String,
         required: false
+    },
+    token: {
+        type: Number,
+        required: true
     }
 });
 

@@ -16,13 +16,23 @@ const commentController = {
         var comment = req.body.comment;
         var userQuery = req.session.username;
 
-        db.insertOne(Comment, {
-            user: userQuery,
-            post: modifiedPost_id,
-            text: comment
+        db.insertOne(Comment, {user: userQuery, post: modifiedPost_id, text: comment}, function(flag) {
+          res.send({flag: flag, username: userQuery});
         });
+    },
 
-        res.redirect('home');
+    postDeleteComment: async function (req, res) {
+      var modifiedPost_id = req.body.hidden_id;
+      var comment = req.body.comment;
+      var userQuery = req.body.username;
+
+      db.deleteOne(Comment, {user: userQuery, post: modifiedPost_id, text: comment}, function(flag) {
+        console.log(userQuery);
+        console.log(comment);
+        console.log(modifiedPost_id);
+        console.log(flag);
+        res.send(flag);
+      });
     }
 }
 
