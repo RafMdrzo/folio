@@ -4,7 +4,7 @@ const hbs = require('hbs');
 const exphbs = require('express-handlebars');
 const handlebars = require('handlebars');
 const typed = require('typed.js');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const port = process.env.PORT || 3000;
 const app = express();
