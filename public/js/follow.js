@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('#follow').click(function() {
+  $('.profile-image-container').on('click', '#follow', function() {
     var userFollowing = ($("#handle")).text().substring(1);
     $.post('/following', {follow: userFollowing}, function(result) {
       if(result) {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     });
   });
 
-  $('#unfollow').click(function() {
+  $('.profile-image-container').on('click', '#unfollow', function() {
     var userFollowing = ($("#handle")).text().substring(1);
     $.post('/unfollowing', {follow: userFollowing}, function(result) {
       if(result) {
