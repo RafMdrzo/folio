@@ -113,9 +113,9 @@
 /*
 .delete-comm, .edit-post, .delete-post
 {
-  margin-top: 8%;
-  float: right;
-  font-size: 11px;
+margin-top: 8%;
+float: right;
+font-size: 11px;
 }
 */
 
@@ -387,4 +387,18 @@ a:hover ,span{
 #loc_assign
 {
   border-radius: 60px;
+}
+
+.removecom {
+  width: 20px;
+  height: 20px;
+  background-color: #CFCFCF;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  font-size: 9px;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: auto;
 }

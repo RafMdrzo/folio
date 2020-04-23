@@ -24,11 +24,14 @@ const commentController = {
     postDeleteComment: async function (req, res) {
       var modifiedPost_id = req.body.hidden_id;
       var comment = req.body.comment;
-      var userQuery = req.session.username;
+      var userQuery = req.body.username;
 
       db.deleteOne(Comment, {user: userQuery, post: modifiedPost_id, text: comment}, function(flag) {
+        console.log(userQuery);
+        console.log(comment);
+        console.log(modifiedPost_id);
+        console.log(flag);
         res.send(flag);
-        console.log(modifiedPost_id + comment);
       });
     }
 }

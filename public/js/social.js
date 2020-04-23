@@ -82,10 +82,14 @@ $(document).ready(function() {
   //delete comment
   $('.comments').on('click', '.removecom', function() {
     var post_id = $(this).parents('div').last().attr('id');
-    var comment = $('.addcomment').val();
+    var data = ($(this).parent().text()).trim();
+    var username = data.substr(0, data.indexOf(' '));
+    var comment = (data.substr(username.length)).trim();
+    comment = comment.substr(0, comment.indexOf(' '));
     $(this).parent().remove();
-    $.post('/deletecomment', {hidden_id: post_id, comment: comment}, function(result){});
-
+    console.log(comment);
+    console.log(username);
     console.log(post_id);
+    $.post('/deletecomment', {username: username, hidden_id: post_id, comment: comment}, function(result){});
   });
 });
