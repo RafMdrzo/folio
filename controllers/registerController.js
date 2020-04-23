@@ -28,8 +28,6 @@ const registerController = {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(reqPw, salt, async function(err, hash) {
                 // Store hash in your password DB.
-                
-
                 db.insertOne(User,
                     {
                         fullName: reqName,
@@ -65,7 +63,6 @@ const registerController = {
                         html: "Welcome to Folio!<br>This email serves as a confirmation for your email. If you're using localhost: <a href='http://localhost:3000/confirmuser?email="+reqEmail+
                                 "&token="+tokenGen+"'> For localhost </a><br>or if you're using Heroku: <a href='http://foliodb.herokuapp.com/confirmuser?email="+reqEmail + "&token="+tokenGen+"'> For Heroku </a>." // plain text body
                     });
-
             });
         });
        

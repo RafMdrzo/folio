@@ -57,8 +57,11 @@
           </div>
             <input type="hidden" name="formInstance" value="form1">
 
-          <div class="container" id="buttonCont" align="center">
+          <div id="error-cont">
+            <p id="error-msg-login"></p>
+          </div>
 
+          <div class="container" id="buttonCont" align="center">
             <button id="logBtn" type="submit" class="btn-lg" align="center">log in</button>
             <button id="regBtn" type="button" class="btn-lg"
             data-toggle="modal" data-target="#registerFormModal" align="center">register</button>
@@ -77,8 +80,8 @@
       </div>
     </div>
   </div>
-  <!-- REGISTER MODAL -->
 
+  <!-- REGISTER MODAL -->
   <div class="modal fade" id="registerFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -136,10 +139,7 @@
               <button id="cancelMod" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </form>
-
-
         </div>
-
       </div>
     </div>
   </div>
