@@ -83,9 +83,12 @@ $(document).ready(function() {
   $('.comments').on('click', '.removecom', function() {
     var post_id = $(this).parents('div').last().attr('id');
     var data = ($(this).parent().text()).trim();
+    data = data.replace(/(\r\n|\n|\r)/gm, "");
     var username = data.substr(0, data.indexOf(' '));
+    username = username.replace(/(\r\n|\n|\r)/gm, "");
     var comment = (data.substr(username.length)).trim();
     comment = comment.substr(0, comment.indexOf(' '));
+    comment = comment.replace(/(\r\n|\n|\r)/gm, "");
     $(this).parent().remove();
     console.log(comment);
     console.log(username);
