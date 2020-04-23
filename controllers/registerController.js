@@ -13,28 +13,42 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 
+function tokenGenerator(){
+    return Math.floor((Math.random() * 99999999) + 1000);
+}
+
 const registerController = {
     postRegister: async function(req, res){
         var reqName = req.body.fullName_;
         var reqUsername = req.body.userName_;
         var reqEmail = req.body.email_;
         var reqPw = req.body.pw_;
-
+        var tokenGen = tokenGenerator();
+        var temp = tokenGen;
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(reqPw, salt, async function(err, hash) {
                 // Store hash in your password DB.
+                
+
                 db.insertOne(User,
                     {
                         fullName: reqName,
                         username : reqUsername,
                         email : reqEmail,
+                        token: temp,
                         password : hash,
                         emailConf: false,
                         bio : "",
                         location : "",
                         avatar: null,
                         imgType: ""
-                    } );
+                    }, (result)=>{
+                        if(result == true){
+                            console.log("Added " + 1);
+                        } else {
+                            console.log("Added " + 0);
+                        }
+                    });
 
                     const transporter = nodemailer.createTransport({
                         service: 'gmail',
@@ -49,7 +63,7 @@ const registerController = {
                         to: reqEmail, // list of receivers
                         subject: "Welcome to Folio!", // Subject line
                         html: "Welcome to Folio!\nThis email serves as a confirmation for your email. If you're using localhost: <a href='http://localhost:3000/confirmuser?email="+reqEmail+
-                                "'> here </a><br>or if you're using Heroku: <a href='http://foliodb.herokuapp.com/confirmuser?email="+reqEmail + "'> here </a>." // plain text body
+                                "&token="+tokenGen+"'> here </a><br>or if you're using Heroku: <a href='http://foliodb.herokuapp.com/confirmuser?email="+reqEmail + "&token="+tokenGen+"'> here </a>." // plain text body
                     });
 
             });
@@ -138,7 +152,13 @@ const registerController = {
     },
     getConfirmUser: async (req, res)=>{
         var reqEmail = req.query.email;
-        db.updateOne(User, {email: reqEmail}, {emailConf: true});
+        var reqToken = req.query.token;
+
+        db.findOne(User, {email: reqEmail}, 'token', (result)=>{
+            if(result.token == reqToken){
+                db.updateOne(User, {email: reqEmail}, {emailConf: true});
+            }
+        })
 
         db.findOne(User, {email: reqEmail}, 'avatar imgType', (result)=>{
             res.render('confirmed', {
@@ -146,7 +166,7 @@ const registerController = {
                 avatar: `data:${result.imgType};charset=utf-8;base64,${result.avatar.toString('base64')}`
             });
 
-        })
+        });
     }
 };
 
