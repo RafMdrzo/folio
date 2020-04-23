@@ -60,9 +60,17 @@ $(document).ready(function() {
 
   //add comment
   $('.comment-container').on('click', '.addcommentbtn', function() {
-    var post_id = $(this).closest("form").attr('id');
-    var comment = $('.addcomment').val();
+    var $form = $(this).closest("form");
+    data = $form.serialize();
+    var comment = data.substring(8);
+    console.log(comment);
+    comment = comment.substr(0, comment.indexOf('&'));
+    comment = comment.replace('%', ' ');
+    comment = comment.replace('20', '');
+    var post_id = $form.attr('id');
+    console.log(comment);
     var img = $('.nav-avatar').attr("src");
+
     $.post('/addcomment', {hidden_id: post_id, comment: comment}, function(result) {
       if(result.flag) {
         $('.comments').append(
