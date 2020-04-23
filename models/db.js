@@ -27,18 +27,20 @@ const database = {
     },
 
     // inserts a single `doc` to the database based on the model `model`
-    insertOne: function(model, doc) {
+    insertOne: function(model, doc, callback) {
         model.create(doc, function(error, result) {
-            if(error) throw error;
+            if(error) return callback(false);
             console.log('Added ' + result);
+            return callback(true);
         });
     },
 
     // inserts multiple `docs` to the database based on the model `model`
-    insertMany: function(model, docs) {
+    insertMany: function(model, docs, callback) {
         model.insertMany(docs, function(error, result) {
-            if(error) throw error;
+            if(error) return callback(false);
             console.log('Added ' + result);
+            return callback(true);
         });
     },
 
@@ -86,19 +88,21 @@ const database = {
 
     // deletes a single document based on the model `model`
     // filtered using the object `conditions`
-    deleteOne: function(model, conditions) {
+    deleteOne: function(model, conditions, callback) {
         model.deleteOne(conditions, function (error, result) {
-            if(error) throw error;
+            if(error) return callback(false);
             console.log('Document deleted: ' + result.deletedCount);
+            return callback(true);
         });
     },
 
     // deletes multiple documents based on the model `model`
     // filtered using the object `conditions`
-    deleteMany: function(model, conditions) {
+    deleteMany: function(model, conditions, callback) {
         model.deleteMany(conditions, function (error, result) {
-            if(error) throw error;
+            if(error) return callback(false);
             console.log('Document deleted: ' + result.deletedCount);
+            return callback(true);
         });
     }
 
