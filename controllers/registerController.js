@@ -124,12 +124,12 @@ const registerController = {
         var query = {username: currentUser};
 
        
-        db.deleteMany(Post, {user: currentUser});
-        db.deleteMany(Comment, {user: currentUser});
-        db.deleteMany(Likes, {user: currentUser});
-        db.deleteMany(Following, {$or:[{user: currentUser}, {following:currentUser}]});
-        db.deleteMany(Follower, {$or:[{user: currentUser}, {follower:currentUser}]});
-        db.deleteOne(User, {username: currentUser});
+        db.deleteMany(Post, {user: currentUser}, (flag)=>{});
+        db.deleteMany(Comment, {user: currentUser}, (flag)=>{});
+        db.deleteMany(Likes, {user: currentUser}, (flag)=>{});
+        db.deleteMany(Following, {$or:[{user: currentUser}, {following:currentUser}]}, (flag)=>{});
+        db.deleteMany(Follower, {$or:[{user: currentUser}, {follower:currentUser}]}, (flag)=>{});
+        db.deleteOne(User, {username: currentUser}, (flag)=>{});
 
         res.redirect('/');
     },
