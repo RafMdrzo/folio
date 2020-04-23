@@ -139,7 +139,14 @@ const registerController = {
     getConfirmUser: async (req, res)=>{
         var reqEmail = req.query.email;
         db.updateOne(User, {email: reqEmail}, {emailConf: true});
-        res.render('confirmed', {layout: false});
+
+        db.findOne(User, {email: reqEmail}, 'avatar imgType', (result)=>{
+            res.render('confirmed', {
+                layout: false,
+                avatar: `data:${result.imgType};charset=utf-8;base64,${result.avatar.toString('base64')}`
+            });
+
+        })
     }
 };
 
