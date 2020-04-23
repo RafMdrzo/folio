@@ -64,14 +64,14 @@ const loginController = {
                 req.session.loggedin = true;
                 res.redirect("/home");
               } else {
-                res.redirect("/");
+                res.render("login", {layout: false, errmsg: "Invalid password."});
               }
           });
           
         }
       }
       else {
-      res.redirect("/");
+        res.render("login", {layout: false, errmsg: "No such user"});
       }
     });
   }

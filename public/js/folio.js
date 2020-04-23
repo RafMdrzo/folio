@@ -187,36 +187,5 @@ $( document ).ready(function()
         $.post('/confresetpass', {password: pass}, function(result){
         })
     })
-
-    /*LOGIN ERRORS*/
-    $('#loginForm').keyup(function() {
-        var name = $('#userLog').val();
-        var pass = $('#passLog').val();
-
-        if(name.length > 0 && pass.length > 0)
-        {
-            $.get('/loginCheckUname', {username: name}, function(result) {
-                if(result){
-                    $('#userLog').css('border-color', 'green');
-                    $('#logBtn').prop('disabled', false);
-                    $('#error-msg-login').text("");
-                    $.get('/loginCheckPass', {password: pass}, function(result) {
-                        if(!result) {
-                            $('#passLog').css('border-color', 'red');
-                            $('#logBtn').prop('disabled', true);
-                            $('#error-msg-login').text("Invalid password");
-                        } else {
-                            $('#passLog').css('border-color', 'green');
-                            $('#logBtn').prop('disabled', false);
-                            $('#error-msg-login').text("");
-                        }
-                    })
-                } else {
-                    $('#userLog').css('border-color', 'red');
-                    $('#logBtn').prop('disabled', true);
-                    $('#error-msg-login').text("Invalid username");
-                }
-            })
-        }
-    })
+    
 });
