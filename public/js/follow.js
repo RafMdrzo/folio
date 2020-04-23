@@ -2,8 +2,8 @@ $(document).ready(function() {
   $('#follow').click(function() {
     var userFollowing = ($("#handle")).text().substring(1);
     $.post('/following', {follow: userFollowing}, function(result) {
-      if(result != null) {
-        $('#follow').val("Unfollow");
+      if(result) {
+        $('#follow').text("Unfollow");
         $('#follow').attr("id", "unfollow");
       }
       else {
@@ -15,8 +15,8 @@ $(document).ready(function() {
   $('#unfollow').click(function() {
     var userFollowing = ($("#handle")).text().substring(1);
     $.post('/unfollowing', {follow: userFollowing}, function(result) {
-      if(result != null) {
-        $('#unfollow').val("Follow");
+      if(result) {
+        $('#unfollow').text("Follow");
         $('#unfollow').attr("id", "follow");
       }
       else {
