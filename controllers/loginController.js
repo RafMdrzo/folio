@@ -23,6 +23,22 @@ const loginController = {
     }
   },
 
+  checkLogInUname: async function (req,res) {
+    var username = req.query.username;
+
+    db.findOne(User, {username: username}, 'username', (result)=>{
+      res.send(result);
+    })
+  },
+
+  checkLogInPass: async function (req,res) {
+    var password = req.query.password;
+
+    db.findOne(User, {password: password}, 'password', (result)=>{
+      res.send(result);
+    })
+  },
+
   // executed when the client sends an HTTP POST request `/signup`
   // as defined in `../routes/routes.js`
   postLogIn: async function (req, res) {

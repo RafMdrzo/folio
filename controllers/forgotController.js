@@ -3,7 +3,6 @@ const db = require('../models/db.js');
 // import module `User` from `../models/UserModel.js`
 const User = require('../models/User.js');
 
-const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 
 const forgotController = {
@@ -21,9 +20,15 @@ const forgotController = {
             from: '"Folio Team" <foliodbteam@gmail.com>', // sender address
             to: reqEmail, // list of receivers
             subject: "Forgot Your Folio Password?", // Subject line
-            html: "If you've lost your password or want to reset it, click on the link. <a href='http://localhost:3000/resetpassword?email="+reqEmail+
-                  " If you did not request a password reset, you can ignore this email." // plain text body
+            html: "If you've lost your password or want to reset it, click on the  <a href='http://localhost:3000/resetpass?email="+reqEmail+"'>link</a>"+
+                  "<br>If you did not request a password reset, you can ignore this email." // plain text body
+        }, function(err, info){
+            if(err)
+                console.log(err);
+            else
+                console.log(info);
         });
+        res.send(reqEmail);
     },
 
     resetPassword: async function(req, res){

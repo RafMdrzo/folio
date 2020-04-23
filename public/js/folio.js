@@ -172,13 +172,12 @@ $( document ).ready(function()
 
     $('#forgotMod').click(function() {
         var mailer = $('#mailForgotten').val();
-        alert(mailer);
 
-        if(mailer != null)
+        if(mailer.length > 0)
         {
-            $.post('/forgotpass', {email: mailer}, function(result){
-                if(result != null){
-                    alert("Email sent.");
+            $.get('/forgotpass', {email: mailer}, function(result){
+                if(result == mailer){
+                    $('.error-msg-email').text("Email sent.");
                 }
             });
         }
@@ -186,10 +185,38 @@ $( document ).ready(function()
 
     $('#submitBtn').click(function() {
         $.post('/confresetpass', {password: pass}, function(result){
-            if(result)
-            {
-
-            }
         })
+    })
+
+    /*LOGIN ERRORS*/
+    $('#loginForm').keyup(function() {
+        var name = $('#userLog').val();
+        var pass = $('#passLog').val();
+
+        if(name.length > 0 && pass.length > 0)
+        {
+            $.get('/loginCheckUname', {username: name}, function(result) {
+                if(result){
+                    $('#userLog').css('border-color', 'green');
+                    $('#logBtn').prop('disabled', false);
+                    $('#error-msg-login').text("");
+                    $.get('/loginCheckPass', {password: pass}, function(result) {
+                        if(!result) {
+                            $('#passLog').css('border-color', 'red');
+                            $('#logBtn').prop('disabled', true);
+                            $('#error-msg-login').text("Invalid password");
+                        } else {
+                            $('#passLog').css('border-color', 'green');
+                            $('#logBtn').prop('disabled', false);
+                            $('#error-msg-login').text("");
+                        }
+                    })
+                } else {
+                    $('#userLog').css('border-color', 'red');
+                    $('#logBtn').prop('disabled', true);
+                    $('#error-msg-login').text("Invalid username");
+                }
+            })
+        }
     })
 });
