@@ -21,8 +21,9 @@ const forgotController = {
             from: '"Folio Team" <foliodbteam@gmail.com>', // sender address
             to: reqEmail, // list of receivers
             subject: "Forgot Your Folio Password?", // Subject line
-            html: "If you've lost your password or want to reset it, click on the link. <a href='http://localhost:3000/resetpassword?email="+reqEmail+
-                  " If you did not request a password reset, you can ignore this email." // plain text body
+            html: "If you've lost your password or want to reset it, click on the link for localhost: <br><a href='http://localhost:3000/resetpassword?email="+reqEmail+
+                +"'>For localhost</a><br>Heroku: <a href='http://foliodb.herokuapp.com/resetpassword?email="+ reqEmail +
+                  "'>For Heroku</a><br> If you did not request a password reset, you can ignore this email." // plain text body
         });
     },
 

@@ -21,7 +21,7 @@ const commentController = {
         });
     },
 
-    postDeleteComment: async function (req, res) {
+    postDeleteComment: function (req, res) {
       var modifiedPost_id = req.body.hidden_id;
       var comment = req.body.comment;
       var userQuery = req.body.username;

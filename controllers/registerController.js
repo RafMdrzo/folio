@@ -62,8 +62,8 @@ const registerController = {
                         from: '"Folio Team" <foliodbteam@gmail.com>', // sender address
                         to: reqEmail, // list of receivers
                         subject: "Welcome to Folio!", // Subject line
-                        html: "Welcome to Folio!\nThis email serves as a confirmation for your email. If you're using localhost: <a href='http://localhost:3000/confirmuser?email="+reqEmail+
-                                "&token="+tokenGen+"'> here </a><br>or if you're using Heroku: <a href='http://foliodb.herokuapp.com/confirmuser?email="+reqEmail + "&token="+tokenGen+"'> here </a>." // plain text body
+                        html: "Welcome to Folio!<br>This email serves as a confirmation for your email. If you're using localhost: <a href='http://localhost:3000/confirmuser?email="+reqEmail+
+                                "&token="+tokenGen+"'> For localhost </a><br>or if you're using Heroku: <a href='http://foliodb.herokuapp.com/confirmuser?email="+reqEmail + "&token="+tokenGen+"'> For Heroku </a>." // plain text body
                     });
 
             });
@@ -155,18 +155,24 @@ const registerController = {
         var reqToken = req.query.token;
 
         db.findOne(User, {email: reqEmail}, 'token', (result)=>{
-            if(result.token == reqToken){
-                db.updateOne(User, {email: reqEmail}, {emailConf: true});
+            if(result != null){
+                if(result.token == reqToken){
+                    db.updateOne(User, {email: reqEmail}, {emailConf: true});
+                    db.findOne(User, {email: reqEmail}, 'avatar imgType', (newRes)=>{
+                        res.render('confirmed', {
+                            layout: false,
+                            avatar: `data:${newRes.imgType};charset=utf-8;base64,${newRes.avatar.toString('base64')}`
+                        });
+            
+                    });
+                }
+            } else {
+                res.send(500)
             }
+            
         })
 
-        db.findOne(User, {email: reqEmail}, 'avatar imgType', (result)=>{
-            res.render('confirmed', {
-                layout: false,
-                avatar: `data:${result.imgType};charset=utf-8;base64,${result.avatar.toString('base64')}`
-            });
-
-        });
+       
     }
 };
 

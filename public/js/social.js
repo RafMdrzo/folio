@@ -59,14 +59,16 @@ $(document).ready(function() {
   });
 
   //add comment
-  $('.comment-container').on('click', '.addcommentbtn', function() {
+  $('.comment-container').on('click', '.addcommentbtn', function(event) {
+    var target = $(event.target);
+
     var $form = $(this).closest("form");
-    data = $form.serialize();
-    var comment = data.substring(8);
+
+    var comment = target.parent().parent().find('.comment-input').find('.addcomment').val();
+
     console.log(comment);
-    comment = comment.substr(0, comment.indexOf('&'));
-    comment = comment.replace('%', ' ');
-    comment = comment.replace('20', '');
+
+    
     var post_id = $form.attr('id');
     console.log(comment);
     var img = $('.nav-avatar').attr("src");
@@ -90,19 +92,31 @@ $(document).ready(function() {
   });
 
   //delete comment
-  $('.comments').on('click', '.removecom', function() {
-    var post_id = $(this).parents('div').last().attr('id');
-    var data = ($(this).parent().text()).trim();
+  $('.comments').on('click', '.removecom', function(event) {
+
+    var target = $(event.target);
+
+    var post_id = target.parents('div').last().attr('id');
+    
+    var username = target.parent().find('.row-name').find('strong').text();
+    var comment = target.parent().find('.row-name').find('.row-comment').text().trim();
+    /*
+    var data = (target.parent().text()).trim();
     data = data.replace(/(\r\n|\n|\r)/gm, "");
     var username = data.substr(0, data.indexOf(' '));
     username = username.replace(/(\r\n|\n|\r)/gm, "");
     var comment = (data.substr(username.length)).trim();
     comment = comment.substr(0, comment.indexOf(' '));
     comment = comment.replace(/(\r\n|\n|\r)/gm, "");
-    $(this).parent().remove();
+    */
+    
+    target.parent().remove();
     console.log(comment);
     console.log(username);
     console.log(post_id);
-    $.post('/deletecomment', {username: username, hidden_id: post_id, comment: comment}, function(result){});
+
+    $.post('/deletecomment', {username: username, hidden_id: post_id, comment: comment}, async function(result){
+      window.location.href = '/';
+    });
   });
 });
