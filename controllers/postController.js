@@ -276,8 +276,8 @@ const postController = {
 
           var conditions = {_id: originalID}
 
-          db.deleteOne(Post, conditions);
-          db.deleteMany(Comment, {post: modifiedPostID});
+          db.deleteOne(Post, conditions, (result)=>{});
+          db.deleteMany(Comment, {post: modifiedPostID}, (result)=>{});
           res.redirect('/home');
 
         }
