@@ -31,7 +31,8 @@ const database = {
         model.create(doc, function(error, result) {
             if(error) return callback(false);
             console.log('Added ' + result);
-            return callback(true);
+            if(callback)
+                return callback(true);
         });
     },
 
