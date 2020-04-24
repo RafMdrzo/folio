@@ -38,9 +38,7 @@ const loginController = {
     var projection = 'username password avatar imgType';
 
     db.findOne(User, query, projection, function(result) {
-          console.log('i am in you lol');
       if(result != null) {
-            console.log('i am in you');
         if(req.body.username == result.username) {
           bcrypt.compare(req.body.password, result.password, function(err, searchRes) {
               // res === false
