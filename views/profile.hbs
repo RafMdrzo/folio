@@ -4,6 +4,11 @@
   f o l i o .
 </title>
   <div class="profile-container">
+    {{#unless mystatus}}
+      <div class="conf-cont">
+        <p class="conf-text"> Your email is not yet confirmed. Check your email for the confirmation link. </p>
+      </div>
+    {{/unless}}
     {{> prof_deets}}
 
     {{> prof_post_container}}

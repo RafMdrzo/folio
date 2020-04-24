@@ -87,7 +87,7 @@ const postController = {
           //projections
           var postProjection = '_id user title description dateCreated postpic imgType';
           var commentProjection = '_id post text user dateCreated';
-          var userProjection = 'username avatar imgType';
+          var userProjection = 'username avatar imgType emailConf';
           var likeProjection = 'post user'
           var followingProjection = "following";
           var myUser = req.session.username;
@@ -223,6 +223,7 @@ const postController = {
                             }//end processing likes to final resulter
 
                             res.render('home',{
+                              mystatus: userRes.emailConf,
                               myavatar:  `data:${userRes.imgType};charset=utf-8;base64,${userRes.avatar.toString('base64')}`,
                               post: finalResulter
                             })

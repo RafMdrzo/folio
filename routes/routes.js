@@ -105,6 +105,4 @@ app.get('/logout', function(req, res) {
 app.get("/profile", profileController.getSelfProfile);
 app.get("/:username", profileController.getUserProfile);
 
-//confirm email link
-
 module.exports = app;

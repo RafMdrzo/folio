@@ -1,4 +1,11 @@
 <div id="post-view-container">
+  {{#unless mystatus}}
+    <div class="conf-cont-spacer">
+    </div>
+    <div class="conf-cont">
+      <p class="conf-text"> Your email is not yet confirmed. Check your email for the confirmation link. </p>
+    </div>
+  {{/unless}}
   <div id="post-container">
     {{#each post as |post|}}
     <div id="post" class="post">

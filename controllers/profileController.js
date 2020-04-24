@@ -47,6 +47,7 @@ const profileController = {
                 resulter.push(postMirror);
               }
               res.render('profile', {
+                mystatus: result.emailConf,
                 myavatar: `data:${result.imgType};charset=utf-8;base64,${result.avatar.toString('base64')}`,
                 avatar: `data:${result.imgType};charset=utf-8;base64,${result.avatar.toString('base64')}`,
                 bio: result.bio,
@@ -60,7 +61,7 @@ const profileController = {
 
 
             });
-            
+
             } else {
               res.send(500 + " Can't find the user");
             }
@@ -92,16 +93,16 @@ const profileController = {
                       path: `data:${postRes[i].imgType};charset=utf-8;base64,${postRes[i].postpic.toString('base64')}`,
                       orientation: 'modal-img'
                     };
-    
+
                     var base64 = postRes[i].postpic.toString('base64');
                     var img = Buffer.from(base64, 'base64')
                     var dimensions = sizeOf(img);
-    
+
                     postMirror.orientation = dimensions.width > dimensions.height ? 'modal-img' : 'modal-img-vert';
                     resulter.push(postMirror);
                   }
                   var myUser = req.session.username;
-                    var projectNew = 'imgType avatar';
+                    var projectNew = 'imgType avatar emailConf';
                     var findFollow = 'user following';
                     var followVal;
 
@@ -127,6 +128,7 @@ const profileController = {
                       if(checkRes != null)
                       {
                         var userMirror = {
+                          mystatus: checkRes.emailConf,
                           myavatar: `data:${checkRes.imgType};charset=utf-8;base64,${checkRes.avatar.toString('base64')}`,
                           avatar: `data:${result.imgType};charset=utf-8;base64,${result.avatar.toString('base64')}`,
                           bio: result.bio,
@@ -143,9 +145,9 @@ const profileController = {
                         res.send(500 + ' Error loading');
                       }
                     })
-    
-    
-    
+
+
+
                 });
               } else {
                 res.send(500 + " Can't find the user");

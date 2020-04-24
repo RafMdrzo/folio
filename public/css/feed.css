@@ -402,3 +402,21 @@ a:hover ,span{
   display: inline-block;
   margin-left: auto;
 }
+
+.conf-cont, .conf-cont-spacer {
+  height: 62px;
+  width: 100vw;
+  background-color: #c23616;
+  display: inline-block;
+}
+
+.conf-cont-spacer {
+  height: 50px;
+}
+
+.conf-text {
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 62px;
+}
