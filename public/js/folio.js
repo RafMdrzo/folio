@@ -183,9 +183,60 @@ $( document ).ready(function()
         }
     });
 
-    $('#submitBtn').click(function() {
-        $.post('/confresetpass', {password: pass}, function(result){
-        })
-    })
+    $('#newpass_').keyup(function(){
+        passVal = $("#newpass_").val();
+        confVal = $("#newcp_").val();
+    
+        if(passVal.length < 8 || confVal == '' || confVal == null)
+        {
+            $("#newpass_").css("border-color", "red");
+            var stmt = "Password has to be more than 8 characters.";
+            $("#err-pass").val(stmt);
+            $('#submitNewPassBtn').prop('disabled', true);
+    
+        }
+        else
+        {
+            $("#err-pass").val("");
+            $("#newpass_").css("border-color", "green");
+            $('#submitNewPassBtn').prop('disabled', false);
+    
+    
+        }
+    
+        $('#newcp_').keyup(function(){
+            
+            passVal = $("#newpass_").val();
+            confVal = $("#newcp_").val();
+    
+            if(passVal != confVal)
+            {
+                $("#newpass_").css("border-color", "red");
+                $("#newcp_").css("border-color", "red");
+    
+                var stmt = "Passwords don't match.";
+                $("#err-pass").val(stmt);
+                $('#regMod').prop('disabled', true);
+                $('#submitNewPassBtn').prop('disabled', true);
+    
+            }
+            else
+            {
+                $("#err-pass").val("");
+                $("#newpass_").css("border-color", "green");
+                $("#newcp_").css("border-color", "green");
+                check = true;
+                $('#submitNewPassBtn').prop('disabled', false);
+                $('#submitNewPassBtn').prop('disabled', false);
+    
+            }
+       });
+     });
+
+
+
+
+
+    
     
 });

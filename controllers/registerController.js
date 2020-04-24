@@ -154,7 +154,8 @@ const registerController = {
         db.findOne(User, {email: reqEmail}, 'token', (result)=>{
             if(result != null){
                 if(result.token == reqToken){
-                    db.updateOne(User, {email: reqEmail}, {emailConf: true});
+                    var changeToken = tokenGenerator();
+                    db.updateOne(User, {email: reqEmail}, {emailConf: true, token: changeToken});
                     db.findOne(User, {email: reqEmail}, 'avatar imgType', (newRes)=>{
                         res.render('confirmed', {
                             layout: false,

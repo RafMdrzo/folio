@@ -52,7 +52,7 @@ app.get('/confirmuser', registerController.getConfirmUser);
 
 //forgot password
 app.get('/forgotpass', forgotController.sendEmail);
-app.get('/resetpass', forgotController.resetPassword);
+app.get('/resetpassword', forgotController.resetPassword);
 app.post('/confresetpass', forgotController.confResetPassword);
 
 //posting
