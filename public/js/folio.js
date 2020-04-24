@@ -153,34 +153,10 @@ $( document ).ready(function()
     });
 
     /*FORGOT PASSWORD*/
-    $('#mailForgotten').keyup(function() {
-        var mailer = $('#mailForgotten').val();
-
-        $.get('/checkEmail', {email: mailer}, function(result){
-            if(result.email != mailer){
-                $('#mailForgotten').css('border-color', 'red');
-                $('.error-msg-email').text('Not a valid email');
-                $('#forgotMod').prop('disabled', true);
-
-            } else {
-                $('#mailForgotten').css('border-color', 'green');
-                $('.error-msg-email').text('');
-                $('#forgotMod').prop('disabled', false);
-            }
-        });
-    });
-
     $('#forgotMod').click(function() {
         var mailer = $('#mailForgotten').val();
 
-        if(mailer.length > 0)
-        {
-            $.get('/forgotpass', {email: mailer}, function(result){
-                if(result == mailer){
-                    $('.error-msg-email').text("Email sent.");
-                }
-            });
-        }
+        $.get('/forgotpass', {email: mailer});
     });
 
     $('#newpass_').keyup(function(){
