@@ -1,5 +1,56 @@
 $(document).ready(function() {
 
+  $('#passLog, #userLog').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+      var username = $('#userLog').val();
+      var password = $('#passLog').val();
+
+      if(password == "" && username == "") {
+        $('#passLog').css('border-color', '#e84118');
+        $('#userLog').css('border-color', '#e84118');
+        $('#error-msg-login').text('Enter username and password.');
+      }
+      else if(username == "") {
+        $('#passLog').css('border-color', '');
+        $('#userLog').css('border-color', '#e84118');
+        $('#error-msg-login').text('Enter username.');
+      }
+      else if(password == "") {
+        $('#passLog').css('border-color', '#e84118');
+        $('#userLog').css('border-color', '');
+        $('#error-msg-login').text('Enter password.');
+      }
+      else {
+        $('#passLog').css('border-color', '');
+        $('#userLog').css('border-color', '');
+        $('#error-msg-login').text('');
+      }
+
+      if(username != "" && password != "") {
+        $.post('/home', {username: username, password: password}, function(result) {
+          if(result != null) {
+            if("password" == result) {
+              $('#passLog').css('border-color', '#e84118');
+              $('#userLog').css('border-color', '');
+              $('#error-msg-login').text('Incorrect password. Try again.');
+            }
+            else if("username" == result) {
+              $('#passLog').css('border-color', '');
+              $('#userLog').css('border-color', '#e84118');
+              $('#error-msg-login').text('User not found. Try again.');
+            }
+            else {
+              $('#passLog').css('border-color', '');
+              $('#userLog').css('border-color', '');
+              window.location.replace = "/home";
+            }
+          }
+        });
+      }
+    }
+  });
+
   //login
   $('#logBtn').click(function() {
     var username = $('#userLog').val();
@@ -42,7 +93,7 @@ $(document).ready(function() {
           else {
             $('#passLog').css('border-color', '');
             $('#userLog').css('border-color', '');
-            window.location.replace("/home");
+            window.location.href = "/home";
           }
         }
       });
