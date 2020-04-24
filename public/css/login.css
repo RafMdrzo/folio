@@ -35,7 +35,7 @@
 #regForm, #resetForm{
   position: static;
   width:400px;
-  height: 300px;
+  height: 325px;
   background: #f5f6fa;
   border-color: #A8A8A8;
   border-radius: 10px;
@@ -82,7 +82,7 @@
   vertical-align: middle;
 }
 
-#cancelMod {
+#cancelMod, #forgotMod {
   background-color: #2f3640;
   border-radius: 50px;
   border-width: 0;
@@ -98,6 +98,21 @@
   display: inline-block;
   margin-top: 3%;
   vertical-align: middle;
+}
+
+#forgotMod {
+  background-color: #0097e6;
+}
+
+#error-msg-login {
+  position: absolute;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5px;
+  font-size: 15px;
+  color: #e84118;
+  font-style: italic;
 }
 
 #logBtn, #submitBtn {
@@ -131,7 +146,7 @@
 }
 
 #buttonCont {
-  padding-top: 25px;
+  padding-top: 40px;
   margin-bottom: 15px;
 }
 

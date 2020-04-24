@@ -23,22 +23,6 @@ const loginController = {
     }
   },
 
-  checkLogInUname: async function (req,res) {
-    var username = req.query.username;
-
-    db.findOne(User, {username: username}, 'username', (result)=>{
-      res.send(result);
-    })
-  },
-
-  checkLogInPass: async function (req,res) {
-    var password = req.query.password;
-
-    db.findOne(User, {password: password}, 'password', (result)=>{
-      res.send(result);
-    })
-  },
-
   // executed when the client sends an HTTP POST request `/signup`
   // as defined in `../routes/routes.js`
   postLogIn: async function (req, res) {
@@ -54,9 +38,10 @@ const loginController = {
     var projection = 'username password avatar imgType';
 
     db.findOne(User, query, projection, function(result) {
+          console.log('i am in you lol');
       if(result != null) {
+            console.log('i am in you');
         if(req.body.username == result.username) {
-
           bcrypt.compare(req.body.password, result.password, function(err, searchRes) {
               // res === false
               if(searchRes === true){
@@ -64,14 +49,14 @@ const loginController = {
                 req.session.loggedin = true;
                 res.redirect("/home");
               } else {
-                res.render("login", {layout: false, errmsg: "Invalid password."});
+                res.send('password');
               }
           });
-          
+
         }
       }
       else {
-        res.render("login", {layout: false, errmsg: "No such user"});
+        res.send('username');
       }
     });
   }

@@ -1,5 +1,54 @@
 $(document).ready(function() {
 
+  //login
+  $('#logBtn').click(function() {
+    var username = $('#userLog').val();
+    var password = $('#passLog').val();
+
+    if(password == "" && username == "") {
+      $('#passLog').css('border-color', '#e84118');
+      $('#userLog').css('border-color', '#e84118');
+      $('#error-msg-login').text('Enter username and password.');
+    }
+    else if(username == "") {
+      $('#passLog').css('border-color', '');
+      $('#userLog').css('border-color', '#e84118');
+      $('#error-msg-login').text('Enter username.');
+    }
+    else if(password == "") {
+      $('#passLog').css('border-color', '#e84118');
+      $('#userLog').css('border-color', '');
+      $('#error-msg-login').text('Enter password.');
+    }
+    else {
+      $('#passLog').css('border-color', '');
+      $('#userLog').css('border-color', '');
+      $('#error-msg-login').text('');
+    }
+
+    if(username != "" && password != "") {
+      $.post('/home', {username: username, password: password}, function(result) {
+        if(result != null) {
+          if("password" == result) {
+            $('#passLog').css('border-color', '#e84118');
+            $('#userLog').css('border-color', '');
+            $('#error-msg-login').text('Incorrect password. Try again.');
+          }
+          else if("username" == result) {
+            $('#passLog').css('border-color', '');
+            $('#userLog').css('border-color', '#e84118');
+            $('#error-msg-login').text('User not found. Try again.');
+          }
+          else {
+            $('#passLog').css('border-color', '');
+            $('#userLog').css('border-color', '');
+            window.location.replace("/home");
+          }
+        }
+      });
+    }
+  });
+
   //follow user
   $('.profile-image-container').on('click', '#follow', function() {
     var userFollowing = ($("#handle")).text().substring(1);
@@ -68,7 +117,7 @@ $(document).ready(function() {
 
     console.log(comment);
 
-    
+
     var post_id = $form.attr('id');
     console.log(comment);
     var img = $('.nav-avatar').attr("src");
@@ -97,7 +146,7 @@ $(document).ready(function() {
     var target = $(event.target);
 
     var post_id = target.parents('div').last().attr('id');
-    
+
     var username = target.parent().find('.row-name').find('strong').text();
     var comment = target.parent().find('.row-name').find('.row-comment').text().trim();
     /*
@@ -109,7 +158,7 @@ $(document).ready(function() {
     comment = comment.substr(0, comment.indexOf(' '));
     comment = comment.replace(/(\r\n|\n|\r)/gm, "");
     */
-    
+
     target.parent().remove();
     console.log(comment);
     console.log(username);

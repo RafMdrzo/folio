@@ -35,8 +35,6 @@ app.use(bodyParser.json());
 
 //login
 app.get("/",loginController.getLogIn);
-app.get('/loginCheckUname', loginController.checkLogInUname);
-app.get('/loginCheckPass', loginController.checkLogInPass);
 
 app.post('/home', loginController.postLogIn);
 app.post('/register', registerController.postRegister);
