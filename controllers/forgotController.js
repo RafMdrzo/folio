@@ -15,6 +15,17 @@ const forgotController = {
     sendEmail: async function(req,res){
         var reqEmail = req.query.email;
         var forgotToken = tokenGenerator();
+        var exists = false;
+
+        // send mail with defined transport object
+        db.updateOne(User, {email: reqEmail}, {token: forgotToken});
+        db.findOne(User, {email: reqEmail}, 'email', (result)=>{
+            if(result != null){
+                if(result.email == reqEmail){
+                    exists = true;
+                }
+            }
+        });
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -23,24 +34,24 @@ const forgotController = {
                 pass: 'accessingFOLIODB1'
             }
         });
-
-        db.updateOne(User, {email: reqEmail}, {token: forgotToken});
-
-        // send mail with defined transport object
         var info = await transporter.sendMail({
             from: '"Folio Team" <foliodbteam@gmail.com>', // sender address
             to: reqEmail, // list of receivers
             subject: "Forgot Your Folio Password?", // Subject line
             html: "If you've lost your password or want to reset it, click on the link for <br>localhost: <a href='http://localhost:3000/resetpassword?email="+reqEmail
             +"&token="+forgotToken+"'>For localhost</a><br>Heroku: <a href='http://foliodb.herokuapp.com/resetpassword?email="+ reqEmail +
-              "&token="+forgotToken+"'>For Heroku</a><br> If you did not request a password reset, you can ignore this email."// plain text body
+            "&token="+forgotToken+"'>For Heroku</a><br> If you did not request a password reset, you can ignore this email."// plain text body
         }, function(err, info){
-            if(err)
-                console.log(err);
-            else
+            if(!exists)
+            {
                 console.log(info);
+                res.send("No such user.");
+            }
+            else{
+                console.log(info);
+                res.send("Email sent!");
+            }
         });
-        res.send(reqEmail);
     },
 
     resetPassword: async function(req, res){

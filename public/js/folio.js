@@ -156,7 +156,10 @@ $( document ).ready(function()
     $('#forgotMod').click(function() {
         var mailer = $('#mailForgotten').val();
 
-        $.get('/forgotpass', {email: mailer});
+        $.get('/forgotpass', {email: mailer}, (result)=>{
+            $('#mail-notifier').text(result);
+
+        });
     });
 
     $('#newpass_').keyup(function(){
