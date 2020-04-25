@@ -8,7 +8,7 @@
   {{/unless}}
   <div id="post-container">
     {{#each post as |post|}}
-    <div id="post" class="post">
+    <div id="post" class="post {{this.post_id}}">
       <div id="photo-container">
         <div id="{{this.orientation}}" style="background-image:url('{{this.post_image}}');">
         </div>
@@ -130,7 +130,7 @@
           Edit Post
         </div>
 
-        <form id = 'editPostForm' method='POST' action='/editprocessing'>
+        <form id = 'editPostForm'>
           <div class="modal-post-fields form-group">
             <input name='hidden_editID' type='hidden' value='{{this.post_id}}'>
             <labelfor="addposttitle">Title</label>
@@ -139,14 +139,13 @@
             <textarea name='edit_desc' class="addpostdesc form-control" rows="3" type="text" placeholder="Description">{{this.post_description}}</textarea>
           </div>
           <div class="container" id="buttonCont" align="center">
-            <button type="submit" class="editpostbtn">Edit Post</button>
+            <button class="editpostbtn">Edit Post</button>
           </form>
-          <form method='POST' action='/deletepost'>
+        <form id = 'delPostForm'>
             <input name='hidden_deleteID' type='hidden' value='{{this.post_id}}'>
-            <button type="submit" class="delpostbtn" id='{{this.comment_id}}'>Delete Post</button>
+            <button class="delpostbtn" id='{{this.comment_id}}'>Delete Post</button>
           </div>
         </form>
-
       </div>
     </div>
   </div>

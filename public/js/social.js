@@ -195,9 +195,7 @@ $(document).ready(function() {
   $('.comments').on('click', '.removecom', function(event) {
 
     var target = $(event.target);
-
     var post_id = target.parents('div').last().attr('id');
-
     var username = target.parent().find('.row-name').find('strong').text();
     var comment = target.parent().find('.row-name').find('.row-comment').text().trim();
     /*
@@ -218,5 +216,29 @@ $(document).ready(function() {
     $.post('/deletecomment', {username: username, hidden_id: post_id, comment: comment}, async function(result){
       window.location.href = '/';
     });
+  });
+
+  $('#editPostForm').on('click', '.editpostbtn', function(event){
+    var target = $(event.target);
+    var post_id = target.parent().parent().find('input').attr('value');
+    var title = target.parent().parent().find('.addposttitle').val();
+    var desc = target.parent().parent().find('.addpostdesc').val();
+    var filter = "." + post_id;
+
+    $.post('/editprocessing', {hidden_editID: post_id, edit_title: title, edit_desc: desc}, function(result){
+      if(result != null){
+        $(document).find(filter).find('.desc').val(desc);
+        $(document).find(filter).find('.title').val(title);
+      }
+    });
+  });
+
+  $('#delPostForm').on('click', '.delpostbtn', function(event){
+    var target = $(event.target);
+    var post_id = target.parent().find('input').attr('value');
+    var filter = "." + post_id;
+
+    $.post('/deletepost', {hidden_deleteID: post_id}, function(event){});
+    $(document).find(filter).remove();
   });
 });

@@ -186,7 +186,6 @@ const postController = {
                                 edit_id: 'aa' + postRes[i]._id,
                                 liked: false,
                                 orientation: 'photo',
-
                               }
 
                               var base64 = postRes[i].postpic.toString('base64');
@@ -196,8 +195,6 @@ const postController = {
                               postMirror.orientation = dimensions.width > dimensions.height ? 'photo' : 'photovert';
 
                               finalResulter.push(postMirror);
-
-
                             }//end processing posts to final resulter
 
                             //process comments to final resulter
@@ -227,38 +224,28 @@ const postController = {
                               myavatar:  `data:${userRes.imgType};charset=utf-8;base64,${userRes.avatar.toString('base64')}`,
                               post: finalResulter
                             })
-
                           }
                         });//end avatar searcg
-
-
-
                         //process found posts
-
                       }
                     });//end comment finder
-
-
                   });//end like finder
-
                 });//end post finder
-
               });//end find people you follow
             }
-
-
-
           });//end User findOne
-
         }
-
       },
 
       postEditPost: (req, res)=>{
         var modifiedPostID = req.body.hidden_editID;
-        var originalID = modifiedPostID.substr(1);
+        var originalID = modifiedPostID.substring(1);
         var reqTitle = req.body.edit_title;
         var reqDesc = req.body.edit_desc;
+        var editMirror = {
+          title: reqTitle,
+          description: reqDesc,
+        }
 
         var filter = {_id: originalID};
         db.updateOne(Post, filter,
@@ -266,21 +253,18 @@ const postController = {
             title: reqTitle,
             description: reqDesc
           });
-
-          res.redirect(req.get('referer'));
-
+        res.send(editMirror);
         },
 
         postDeletePost: (req, res) =>{
           var modifiedPostID = req.body.hidden_deleteID;
-          var originalID = modifiedPostID.substr(1);
+          var originalID = modifiedPostID.substring(1);
 
           var conditions = {_id: originalID}
 
           db.deleteOne(Post, conditions, (result)=>{});
           db.deleteMany(Comment, {post: modifiedPostID}, (result)=>{});
-          res.redirect('/home');
-
+          //res.redirect('/home');
         }
       };
 
