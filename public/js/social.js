@@ -219,6 +219,28 @@ $(document).ready(function() {
     });
   });
 
+  $('.addpostdesc, .addposttitle').keyup(function(){
+    var img = $('.postfilepond').val();
+    var title = $('.addposttitle').val();
+    var desc = $('.addpostdesc').val();
+
+    if(title != "" && desc != "" || img != ""){
+      $('.addpostbtn').attr('disabled', false);
+    }
+    else {
+      $('.addpostbtn').attr('disabled', true);
+    }
+  });
+
+  $('#delPostForm').on('click', '.delpostbtn', function(event){
+    var target = $(event.target);
+    var post_id = target.parent().find('input').attr('value');
+    var filter = "." + post_id;
+
+    $.post('/deletepost', {hidden_deleteID: post_id}, function(event){});
+    $(document).find(filter).remove();
+  });
+
   $('#editPostForm').on('click', '.editpostbtn', function(event){
     var target = $(event.target);
     var post_id = target.parent().parent().find('input').attr('value');

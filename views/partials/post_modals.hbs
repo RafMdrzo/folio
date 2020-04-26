@@ -11,14 +11,14 @@
           <form id='addPostForm'method='POST' action='/postprocessing'>
 
 
-          <input name='upload' class='filepond postfilepond' type='file'>
+          <input name='upload' class='filepond postfilepond' type='file' required>
 
           <div class="modal-post-fields">
-            <input name = 'post_title'class="addposttitle form-control mr-sm-2" type="text" placeholder="Title" maxlength = "15">
+            <input name = 'post_title'class="addposttitle form-control mr-sm-2" type="text" placeholder="Title" maxlength = "15" required>
           </div>
-            <textarea name = 'descriptor' form ='addPostForm' wrap='hard' class="addpostdesc form-control mr-sm-2" type="text" placeholder="Description"></textarea>
+            <textarea name = 'descriptor' form ='addPostForm' wrap='hard' class="addpostdesc form-control mr-sm-2" type="text" placeholder="Description" required></textarea>
           <div class="addpost-button">
-            <button type="submit" class="addpostbtn btn btn-secondary">Post</button>
+            <button type="submit" class="addpostbtn btn btn-secondary" disabled="disabled">Post</button>
           </div>
           </form>
         </div>
