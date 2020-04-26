@@ -84,10 +84,11 @@ Accessing the app via the Heroku deployment is easier since the database is alre
 
 For exporting and importing the sample data, we used MongoDB Compass.
 
-Pre-Requisites:
+Prerequisites:
 - In order to confirm an account via nodemailer, make sure you allow non secure apps to access your gmail account. This feature can be accessed here: https://myaccount.google.com/lesssecureapps
 
 OPTIONAL: To minify public scripts, run grunt on the folder's directory via command line
+
 1. Create MongoDB database named as folioDB. Create the collections: users, posts, comments, likes, followings, and followers.
 2. Import the sample data from JSON files in the folder, **sample data**, to their respective collections.
 3. Run the database.
