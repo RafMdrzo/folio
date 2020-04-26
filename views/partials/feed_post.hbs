@@ -31,22 +31,22 @@
           </div>
           <div class="photo-actions">
             {{#if liked}}
-            <a href="javascript:void();" id="liked" class="{{this.post_id}}">
+            <a href="javascript:;" id="liked" class="{{this.post_id}}">
               <img class="socact-action" src="img/heart2.png" id="likedpic">
             </a>
             {{else}}
-            <a href="javascript:void();" id="unliked" class="{{this.post_id}}">
+            <a href="javascript:;" id="unliked" class="{{this.post_id}}">
               <img class="socact-action" src="img/heart.png" id="unlikedpic">
             </a>
             {{/if}}
-            <a href='javascript:void();' class="socact-container" data-toggle="modal" data-target='#{{this.post_id}}'>
+            <a href='javascript:;' class="socact-container" data-toggle="modal" data-target='#{{this.post_id}}'>
               <img class="socact-action" src="img/comment.png">
             </a>
             <a href="https://twitter.com/intent/tweet?text=foliodb.herokuapp.com/{{this.post_author}}" class="socact-container" target="_blank">
               <img class="socact-action" src="img/share.png">
             </a>
             {{#if status}}
-            <a href='javascript:void();' class='edit-post socact-container' data-toggle='modal' data-target='#{{this.edit_id}}'>
+            <a href='javascript:;' class='edit-post socact-container' data-toggle='modal' data-target='#{{this.edit_id}}'>
               <img class='socact-action' src='img/options.png'>
             </a>
             {{/if}}
