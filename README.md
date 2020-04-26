@@ -98,6 +98,7 @@ OPTIONAL: To minify public scripts, run grunt on the folder's directory via comm
 ![Alt text](/screenshot2.png?raw=true "Login page")
 7. If starting fresh, you'll have to follow accounts first. After which, you'll now be able to view and interact with posts. You can also modify your account and profile information. You can also search for other existing users in the database.
 ![Alt text](/screenshot1.png?raw=true "A email confirmation prompt appears when you haven't confirmed your email yet.")
+![Alt text](/screenshot3.png?raw=true "Search")
 8. To logout, click the avatar and press logout.
 
 ## Stuff to remember
