@@ -1,8 +1,7 @@
-{"_id":{"$oid":"5e8982112b635d0017e8134d"},"user":"eugeniopastoral","follower":"kychoa","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e8985ad2b635d0017e8135d"},"user":"eugeniopastoral","follower":"rafmdrz","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e8985e62b635d0017e8135f"},"user":"kychoa","follower":"rafmdrz","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e898a712b635d0017e81364"},"user":"rafmdrz","follower":"kerbychua","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e898a8f2b635d0017e81366"},"user":"kychoa","follower":"kerbychua","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e898a972b635d0017e81368"},"user":"eugeniopastoral","follower":"kerbychua","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e899d4d2b635d0017e81376"},"user":"rafmdrz","follower":"kychoa","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e899dde2b635d0017e81379"},"user":"kerbychua","follower":"kychoa","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea53f3ad98a0b0017ff0dc2"},"user":"eugeniopastoral","follower":"kychoa","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54057d98a0b0017ff0dca"},"user":"rafmdrz","follower":"kychoa","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54bbe8db19d0017fddbfc"},"user":"eugeniopastoral","follower":"kerbychua","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54bf28db19d0017fddbfe"},"user":"kychoa","follower":"kerbychua","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54dbe8db19d0017fddc09"},"user":"rafmdrz","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54dcc8db19d0017fddc0b"},"user":"kychoa","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54de28db19d0017fddc0d"},"user":"kerbychua","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}

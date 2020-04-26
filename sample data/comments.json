@@ -1,7 +1,5 @@
-{"_id":{"$oid":"5e898bfc2b635d0017e8136f"},"user":"kerbychua","post":"a5e88a278f041e8001786c5e1","text":"edgyyyy","dateCreated":{"$date":{"$numberLong":"1586072572795"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e8991cc2b635d0017e81372"},"user":"kychoa","post":"a5e897fba2b635d0017e81347","text":"naisu","dateCreated":{"$date":{"$numberLong":"1586074060792"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e8993572b635d0017e81374"},"user":"kerbychua","post":"a5e897fba2b635d0017e81347","text":"XDD","dateCreated":{"$date":{"$numberLong":"1586074455633"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e899c502b635d0017e81375"},"user":"kerbychua","post":"a5e8982ad2b635d0017e8134f","text":"e","dateCreated":{"$date":{"$numberLong":"1586076752879"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e899d902b635d0017e81378"},"user":"kychoa","post":"a5e88a278f041e8001786c5e1","text":"ay","dateCreated":{"$date":{"$numberLong":"1586077072651"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e899f5a2b635d0017e8137b"},"user":"rafmdrz","post":"a5e897fba2b635d0017e81347","text":"Prayer meeting? 👀","dateCreated":{"$date":{"$numberLong":"1586077530994"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e899fe12b635d0017e8137c"},"user":"rafmdrz","post":"a5e8982ad2b635d0017e8134f","text":"g","dateCreated":{"$date":{"$numberLong":"1586077665193"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea535631095a50017a08191"},"user":"eugeniopastoral","post":"a5ea5263dc4b5bf00177417fe","text":"I listen to this every night bro.","dateCreated":{"$date":{"$numberLong":"1587885411297"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea53fd9d98a0b0017ff0dc9"},"user":"kychoa","post":"a5ea539c1d98a0b0017ff0dbb","text":"This looks awesome!","dateCreated":{"$date":{"$numberLong":"1587888089872"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea540add98a0b0017ff0dcc"},"user":"kychoa","post":"a5ea5263dc4b5bf00177417fe","text":"Sameeee","dateCreated":{"$date":{"$numberLong":"1587888301452"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54c5b8db19d0017fddc05"},"user":"kerbychua","post":"a5ea53a93d98a0b0017ff0dbd","text":"Ganda bro!","dateCreated":{"$date":{"$numberLong":"1587891291323"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea54c6c8db19d0017fddc08"},"user":"kerbychua","post":"a5ea53c5fd98a0b0017ff0dbf","text":"Nakapunta na ko dyan hahaha","dateCreated":{"$date":{"$numberLong":"1587891308004"}},"__v":{"$numberInt":"0"}}
