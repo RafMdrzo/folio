@@ -168,14 +168,15 @@ $(document).ready(function() {
 
     console.log(comment);
 
-
     var post_id = $form.attr('id');
     console.log(comment);
     var img = $('.nav-avatar').attr("src");
 
+    var modal = target.parent().parent().parent().parent().parent().find('.comments');
+
     $.post('/addcomment', {hidden_id: post_id, comment: comment}, function(result) {
       if(result.flag) {
-        $('.comments').append(
+        modal.append(
           '<div class="comment-cont">' +
           '<img src="' + img + '">' +
           '<div class="row-name">' +
@@ -214,7 +215,7 @@ $(document).ready(function() {
     console.log(post_id);
 
     $.post('/deletecomment', {username: username, hidden_id: post_id, comment: comment}, async function(result){
-      window.location.href = '/';
+
     });
   });
 
