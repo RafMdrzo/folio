@@ -1,0 +1,25 @@
+<div class = "profile-container">
+  <div style="width: 50%; height: 100%; float: left;">
+    <div style="margin-left: 10%; margin-right: 10%; margin-top: 2.5%;">
+    <h2>Authors</h2>
+    <li>Eugenio Pastoral</li>
+    <li>Rafael Maderazo</li>
+    <li>Kyra Choa</li>
+    <br>
+    <h2>Project Description</h2>
+    <p style="word-break: break-word;">Folio is a social media platform designed for creatives. The website focuses on the content uploaded by the users. Basic social media features like as posting, commenting, and following users can be done.</p>
+    </div>
+  </div>
+  <div style="width: 50%; height: 100%; float: left">
+    <div style="margin-left: 10%; margin-top: 2.5%;">
+      <h2>Libraries</h2>
+      <li>JQuery</li>
+      <li>Bootstrap</li>
+      </br>
+      <h2>Dependencies</h2>
+      {{#each dependencies}}
+        <li>{{name}} – v{{version}}</li>
+      {{/each}}
+    </div>
+  </div>
+</div>

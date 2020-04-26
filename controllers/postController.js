@@ -22,6 +22,58 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 const bcrypt = require('bcrypt');
 
 const postController = {
+  getAbout: async function (req, res) {
+    if(req.session.loggedin == true) {
+      var myUser = req.session.username;
+      db.findOne(User, {username: myUser}, 'imgType avatar', (userRes)=>{
+
+        if(userRes != null)
+        {
+          res.render('about', {
+            dependencies: [ {name: "assert", version: "2.0.0"},
+                            {name: "bcrypt", version: "4.0.1"},
+                            {name: "bcryptjs", version: "2.4.3"},
+                            {name: "body", version: "5.1.0"},
+                            {name: "body-parser", version: "1.19.0"},
+                            {name: "cjs", version: "0.0.11"},
+                            {name: "express", version: "4.17.1"},
+                            {name: "express-handlebars", version: "4.0.0"},
+                            {name: "express-session", version: "1.17.0"},
+                            {name: "filepond", version: "4.13.0"},
+                            {name: "filepond-plugin-file-encode", version: "2.1.5"},
+                            {name: "filepond-plugin-image-resize", version: "2.0.4"},
+                            {name: "grunt", version: "1.1.0"},
+                            {name: "grunt-contrib-cssmin", version: "3.0.0"},
+                            {name: "grunt-contrib-uglify", version: "4.0.1"},
+                            {name: "grunt-contrib-watch", version: "1.1.0"},
+                            {name: "hbs", version: "4.1.1"},
+                            {name: "image-size", version: "0.8.3"},
+                            {name: "install", version: "0.13.0"},
+                            {name: "minify", version: "5.1.1"},
+                            {name: "mongo", version: "0.1.0"},
+                            {name: "mongodb", version: "2.2.33"},
+                            {name: "mongoose", version: "5.9.6"},
+                            {name: "node-addon-api", version: "2.0.0"},
+                            {name: "node-pre-gyp", version: "0.14.0"},
+                            {name: "node-supervisor", version: "1.0.2"},
+                            {name: "nodemailer", version: "6.4.6"},
+                            {name: "npm", version: "6.14.4"},
+                            {name: "parser", version: "0.1.4"},
+                            {name: "passport", version: "0.4.1"},
+                            {name: "passport-local", version: "1.0.0"},
+                            {name: "supervisor", version: "0.12.0"},
+                            {name: "supervisord", version: "0.1.0"},
+                            {name: "typed.js", version: "2.0.11"}
+                          ],
+            myavatar:  `data:${userRes.imgType};charset=utf-8;base64,${userRes.avatar.toString('base64')}`
+          });
+        }
+      });
+    }
+    else {
+      res.redirect('/');
+    }
+  },
   postAddPost: async function (req, res){
     var query = {username: req.session.username};
     //post contents

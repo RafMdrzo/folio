@@ -91,6 +91,8 @@ app.post('/deleteuser', registerController.deleteUser);
 app.get('/checkUsername', registerController.getCheckUsername);
 app.get('/checkEmail', registerController.getCheckEmail);
 
+app.get('/about', postController.getAbout);
+
 //logout
 app.get('/logout', function(req, res) {
   req.session.destroy((err) => {
