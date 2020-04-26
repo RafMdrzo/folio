@@ -3,3 +3,15 @@
 {"_id":{"$oid":"5ea540add98a0b0017ff0dcc"},"user":"kychoa","post":"a5ea5263dc4b5bf00177417fe","text":"Sameeee","dateCreated":{"$date":{"$numberLong":"1587888301452"}},"__v":{"$numberInt":"0"}}
 {"_id":{"$oid":"5ea54c5b8db19d0017fddc05"},"user":"kerbychua","post":"a5ea53a93d98a0b0017ff0dbd","text":"Ganda bro!","dateCreated":{"$date":{"$numberLong":"1587891291323"}},"__v":{"$numberInt":"0"}}
 {"_id":{"$oid":"5ea54c6c8db19d0017fddc08"},"user":"kerbychua","post":"a5ea53c5fd98a0b0017ff0dbf","text":"Nakapunta na ko dyan hahaha","dateCreated":{"$date":{"$numberLong":"1587891308004"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5523c86f5410c1855f947"},"user":"eugeniopastoral","post":"a5ea54b778db19d0017fddbfb","text":"Ingat ka bro","dateCreated":{"$date":{"$numberLong":"1587892796657"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5524286f5410c1855f948"},"user":"eugeniopastoral","post":"a5ea54b4d8db19d0017fddbfa","text":"ako din","dateCreated":{"$date":{"$numberLong":"1587892802546"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5524a86f5410c1855f949"},"user":"eugeniopastoral","post":"a5ea54b1e8db19d0017fddbf9","text":"LARO TAYOO","dateCreated":{"$date":{"$numberLong":"1587892810025"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5565286f5410c1855f985"},"user":"eugeniopastoral","post":"a5ea52703c4b5bf00177417ff","text":"ganda bro","dateCreated":{"$date":{"$numberLong":"1587893842626"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea556aa86f5410c1855f988"},"user":"kychoa","post":"a5ea53c5fd98a0b0017ff0dbf","text":"My friend lives there ","dateCreated":{"$date":{"$numberLong":"1587893930123"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea556b586f5410c1855f989"},"user":"kychoa","post":"a5ea53b9dd98a0b0017ff0dbe","text":"saan ito?","dateCreated":{"$date":{"$numberLong":"1587893941023"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea556be86f5410c1855f98a"},"user":"kychoa","post":"a5ea5366d1095a50017a08197","text":"shork","dateCreated":{"$date":{"$numberLong":"1587893950052"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea556ef86f5410c1855f98b"},"user":"rafmdrz","post":"a5ea5263dc4b5bf00177417fe","text":"Faveeeee","dateCreated":{"$date":{"$numberLong":"1587893999481"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea556f886f5410c1855f98c"},"user":"rafmdrz","post":"a5ea52927c4b5bf0017741802","text":"I miss you so much","dateCreated":{"$date":{"$numberLong":"1587894008072"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5575586f5410c1855f98f"},"user":"rafmdrz","post":"a5ea53c5fd98a0b0017ff0dbf","text":"Overnight na ba","dateCreated":{"$date":{"$numberLong":"1587894101328"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5578486f5410c1855f995"},"user":"kerbychua","post":"a5ea53ebfd98a0b0017ff0dc1","text":"KING","dateCreated":{"$date":{"$numberLong":"1587894148595"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5578986f5410c1855f996"},"user":"kerbychua","post":"a5ea53fb1d98a0b0017ff0dc8","text":"Lol","dateCreated":{"$date":{"$numberLong":"1587894153246"}},"__v":{"$numberInt":"0"}}

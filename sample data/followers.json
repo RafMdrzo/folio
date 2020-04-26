@@ -2,6 +2,7 @@
 {"_id":{"$oid":"5ea54057d98a0b0017ff0dca"},"user":"rafmdrz","follower":"kychoa","__v":{"$numberInt":"0"}}
 {"_id":{"$oid":"5ea54bbe8db19d0017fddbfc"},"user":"eugeniopastoral","follower":"kerbychua","__v":{"$numberInt":"0"}}
 {"_id":{"$oid":"5ea54bf28db19d0017fddbfe"},"user":"kychoa","follower":"kerbychua","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5ea54dbe8db19d0017fddc09"},"user":"rafmdrz","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}
 {"_id":{"$oid":"5ea54dcc8db19d0017fddc0b"},"user":"kychoa","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}
 {"_id":{"$oid":"5ea54de28db19d0017fddc0d"},"user":"kerbychua","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5572686f5410c1855f98d"},"user":"eugeniopastoral","follower":"rafmdrz","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea5585a86f5410c1855f99d"},"user":"rafmdrz","follower":"eugeniopastoral","__v":{"$numberInt":"0"}}
