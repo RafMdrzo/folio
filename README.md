@@ -94,7 +94,7 @@ OPTIONAL: To minify public scripts, run grunt on the folder's directory via comm
 4. Execute index.js.
 5. Go to localhost:3000 or https://foliodb.herokuapp.com/. You'll be redirected to the login page. This is the behavior when you haven't logged in yet.
 6. To login, enter **eugeniopastoral** and **helloworld** as the username and password respectively. You can use the usernames: **kychoa**, **rafmdrz**, and **kerbychua**. These accounts also have **helloworld** as their password. Alternatively, you can create a new account. Upon creating the account, you'll receive a confirmation email.
-7. If starting fresh, you'll have to follow accounts first. Afterwhich, you'll now be able to view and interact with posts. You can also modify your account and profile information. 
+7. If starting fresh, you'll have to follow accounts first. After which, you'll now be able to view and interact with posts. You can also modify your account and profile information. 
    You can also search for other existing users in the database.
 8. To logout, click the avatar and press logout.
 
